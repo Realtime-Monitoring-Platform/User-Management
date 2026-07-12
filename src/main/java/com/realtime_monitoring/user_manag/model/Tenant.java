@@ -29,6 +29,5 @@ public class Tenant extends BaseEntity {
     private String logoUrl;
     @Enumerated(EnumType.STRING)
     private TenantStatus Status;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    
 }

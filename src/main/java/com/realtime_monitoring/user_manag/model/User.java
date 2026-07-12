@@ -48,14 +48,6 @@ public class User extends BaseEntity {
 
     private LocalDateTime lastLogin;
 
-
-    private LocalDateTime createdAt;
-
-
-    private LocalDateTime updatedAt;
-
-
-
     @ManyToOne
     @JoinColumn(name ="tenant_id")
     private Tenant tenant;
