@@ -1,6 +1,10 @@
 package com.realtime_monitoring.user_manag.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +13,15 @@ import lombok.Setter;
 @Table(name="user_roles")
 @Getter
 @Setter
-public class UserRole {
+public class UserRole extends BaseEntity {
+
     
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name="role_id")
+    private Role role;
 }

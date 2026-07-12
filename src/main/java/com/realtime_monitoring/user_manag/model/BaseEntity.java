@@ -18,6 +18,7 @@ import lombok.Setter;
 @Setter
 @MappedSuperclass //This class is not a database table by itself. Its fields should be inherited and mapped into the tables of its subclasses
 public abstract class BaseEntity {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

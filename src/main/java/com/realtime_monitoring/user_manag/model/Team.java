@@ -19,7 +19,6 @@ public class Team extends BaseEntity {
 
     private String name;
 
-
     private String description;
 
     @ManyToOne

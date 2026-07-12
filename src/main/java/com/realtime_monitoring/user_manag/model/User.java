@@ -47,35 +47,24 @@ public class User extends BaseEntity {
     @ManyToOne
     @JoinColumn(name ="tenant_id")
     private Tenant tenant;
+
     @ManyToMany
     @JoinTable(
         name = "user_roles",
         joinColumns = @JoinColumn(name="user_id"),
         inverseJoinColumns = @JoinColumn(name="role_id")
-
     )
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> roles = new HashSet();
 
 
 
 
-
-    // @ManyToMany
-    // @JoinTable(
-    //     name="user_roles",
-    //     joinColumns=@JoinColumn(name="user_id"),
-    //     inverseJoinColumns=@JoinColumn(name="role_id")
-    // )
-    // private Set<Role> roles = new HashSet<>();
-
-
-
-    // @ManyToMany
-    // @JoinTable(
-    //     name="user_teams",
-    //     joinColumns=@JoinColumn(name="user_id"),
-    //     inverseJoinColumns=@JoinColumn(name="team_id")
-    // )
-    // private Set<Team> teams = new HashSet<>();
+     @ManyToMany
+     @JoinTable(
+         name="user_teams",
+         joinColumns=@JoinColumn(name="user_id"),
+         inverseJoinColumns=@JoinColumn(name="team_id")
+     )
+     private Set<Team> teams = new HashSet<>();
 
 }
