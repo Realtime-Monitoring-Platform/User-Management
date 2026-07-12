@@ -1,0 +1,5 @@
+spring:
+    application:
+        name: user_manag
+    config:
+        import: optional:configserver:http://localhost:9000
