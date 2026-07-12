@@ -14,10 +14,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name="permissions")
-public class Permission {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+public class Permission extends BaseEntity {
+    
 
     private String name;
     private String description;

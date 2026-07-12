@@ -18,11 +18,7 @@ import lombok.Setter;
 @Table(name="teams")
 @Getter
 @Setter
-public class Team {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-
+public class Team extends BaseEntity {
 
     private String name;
 

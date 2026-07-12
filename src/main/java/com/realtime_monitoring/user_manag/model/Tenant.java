@@ -19,11 +19,8 @@ import lombok.Setter;
 @Table(name = "tenants")
 @Getter
 @Setter
-public class Tenant {
+public class Tenant extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
 
     private String name;
 
