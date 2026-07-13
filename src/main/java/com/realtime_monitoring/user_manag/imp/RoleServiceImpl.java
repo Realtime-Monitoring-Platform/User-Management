@@ -9,6 +9,7 @@ import com.realtime_monitoring.user_manag.dto.role.RoleRequest;
 import com.realtime_monitoring.user_manag.dto.role.RoleResponse;
 import com.realtime_monitoring.user_manag.mapper.RoleMapper;
 import com.realtime_monitoring.user_manag.mapper.UserMapper;
+import com.realtime_monitoring.user_manag.model.Role;
 import com.realtime_monitoring.user_manag.repository.RoleRepository;
 import com.realtime_monitoring.user_manag.service.RoleService;
 
@@ -20,6 +21,7 @@ public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
     private final RoleMapper roleMapper;
+
     @Override
     public List<RoleResponse> getAllRoles() {
         return this.roleRepository.findAll().stream().map(roleMapper::toResponse).toList();
@@ -27,21 +29,24 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleResponse createRole(RoleRequest roleRequest) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createRole'");
+        Role role = this.roleRepository.save(roleMapper.toEntity(roleRequest));
+        return roleMapper.toResponse(role);
     }
 
     @Override
     public RoleResponse updateRole(UUID roleId, RoleRequest roleRequest) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateRole'");
+        Role role = this.roleRepository.findById(roleId).orElseThrow(() -> new RuntimeException("Role not found"));
+        role.setName(roleRequest.getName());
+        role.setDescription(roleRequest.getDescription());
+        role = this.roleRepository.save(role);
+        return roleMapper.toResponse(role);
     }
 
     @Override
     public void deleteRole(UUID roleId) {
-                this.roleRepository.deleteById(roleId);;
+        this.roleRepository.deleteById(roleId);
+        ;
 
     }
-    
-    
+
 }

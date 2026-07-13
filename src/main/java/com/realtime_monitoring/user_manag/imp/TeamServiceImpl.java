@@ -43,8 +43,6 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public void deleteTeam(UUID TeamId) {
         this.teamRepository.deleteById(TeamId);
-        ;
-
     }
 
 }
