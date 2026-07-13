@@ -21,50 +21,41 @@ import lombok.Setter;
 @Setter
 public class User extends BaseEntity {
 
-
-
     private String username;
 
     private String email;
-
 
     private String firstName;
 
     private String lastName;
 
-
     private String phone;
 
     private String avatarUrl;
 
+    private String password;
+
+    private String resetPasswordToken;
+
+    private String verificationToken;
+
+    private String Address;
 
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
-
     private LocalDateTime lastLogin;
 
     @ManyToOne
-    @JoinColumn(name ="tenant_id")
+    @JoinColumn(name = "tenant_id")
     private Tenant tenant;
 
     @ManyToMany
-    @JoinTable(
-        name = "user_roles",
-        joinColumns = @JoinColumn(name="user_id"),
-        inverseJoinColumns = @JoinColumn(name="role_id")
-    )
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet();
 
-
-
-
-     @ManyToMany
-     @JoinTable(
-         name="user_teams",
-         joinColumns=@JoinColumn(name="user_id"),
-         inverseJoinColumns=@JoinColumn(name="team_id")
-     )
-     private Set<Team> teams = new HashSet<>();
+    @ManyToMany
+    @JoinTable(name = "user_teams", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+    private Set<Team> teams = new HashSet<>();
 
 }

@@ -1,6 +1,5 @@
 package com.realtime_monitoring.user_manag.model;
 
-
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.JoinColumn;
@@ -9,10 +8,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-
-
 @Entity
-@Table(name="teams")
+@Table(name = "teams")
 @Getter
 @Setter
 public class Team extends BaseEntity {
