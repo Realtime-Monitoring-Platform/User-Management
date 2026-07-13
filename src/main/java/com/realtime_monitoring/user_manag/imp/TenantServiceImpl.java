@@ -1,11 +1,51 @@
 package com.realtime_monitoring.user_manag.imp;
 
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
+import com.realtime_monitoring.user_manag.dto.tenant.TenantRequest;
+import com.realtime_monitoring.user_manag.dto.tenant.TenantResponse;
+import com.realtime_monitoring.user_manag.mapper.TenantMapper;
+import com.realtime_monitoring.user_manag.model.Tenant;
+import com.realtime_monitoring.user_manag.repository.TenantRepository;
 import com.realtime_monitoring.user_manag.service.TenantService;
 
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+
 @Service
-public class TenantServiceImpl extends TenantService {
+@RequiredArgsConstructor
+@Transactional
+public class TenantServiceImpl implements TenantService {
+    
+    private final TenantRepository tenantRepository;
+    private final TenantMapper tenantMapper;
+
+
+    @Override
+    public List<TenantResponse> getAllTenants() {
+        return this.tenantRepository.findAll().stream().map(tenantMapper::toResponse).toList();
+    }
+
+    @Override
+    public TenantResponse createTenant(TenantRequest TenantRequest) {
+        Tenant tenant = tenantMapper.toEntity(TenantRequest);
+        return tenantMapper.toResponse(this.tenantRepository.save(tenant));
+    }
+
+    @Override
+    public TenantResponse updateTenant(UUID TenantId, TenantRequest TenantRequest) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateTenant'");
+    }
+
+    @Override
+    public void deleteTenant(UUID TenantId) {
+        this.tenantRepository.deleteById(TenantId);;
+
+    }
     
     
 }

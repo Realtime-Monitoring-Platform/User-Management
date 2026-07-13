@@ -1,13 +1,16 @@
 package com.realtime_monitoring.user_manag.service;
 
+import java.util.List;
+import java.util.UUID;
+
 import com.realtime_monitoring.user_manag.dto.team.TeamRequest;
 import com.realtime_monitoring.user_manag.dto.team.TeamResponse;
 
 public interface TeamService {
 
-    TeamResponse getAllTeams();
+    List<TeamResponse> getAllTeams();
     TeamResponse createTeam(TeamRequest TeamRequest);
-    TeamResponse updateTeam(Long TeamId, TeamRequest TeamRequest);
-    void deleteTeam(Long TeamId);
+    TeamResponse updateTeam(UUID TeamId, TeamRequest TeamRequest);
+    void deleteTeam(UUID TeamId);
     
 }
