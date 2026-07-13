@@ -20,7 +20,6 @@ import lombok.Setter;
 public class Role extends BaseEntity{
     
     private String name;
-
     private String description;
 
     @ManyToMany
