@@ -29,6 +29,8 @@ import lombok.Setter;
 @Table(name="user_teams")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserTeam {
 
     @Id
