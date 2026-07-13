@@ -39,16 +39,16 @@ public class User extends BaseEntity {
 
     private String password;
 
-    private String resetPasswordToken;
+    // private String resetPasswordToken;
 
-    private String verificationToken;
+    // private String verificationToken;
 
     private String Address;
 
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
-    private LocalDateTime lastLogin;
+    //private LocalDateTime lastLogin;
 
     @ManyToOne
     @JoinColumn(name = "tenant_id")

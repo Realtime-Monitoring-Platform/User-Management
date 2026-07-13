@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class TeamController {
     private final TeamService teamService;
 
-    @GetMapping("/d")
-    public String getMethodName() {
+    @GetMapping("/")
+    public String getAllTeams() {
         return "new String";
     }
     

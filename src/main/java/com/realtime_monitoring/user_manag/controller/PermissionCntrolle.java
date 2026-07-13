@@ -13,6 +13,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PermissionCntrolle {
     private final PermissionService permissionService;
-
+    
     
 }
