@@ -1,24 +1,21 @@
-package com.realtime_monitoring.user_manag.dto.permissions;
+package com.realtime_monitoring.user_manag.dto.team;
 
 import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PermissionResponse {
-    
-    
+public class TeamResponse {
+
     private Long id;
+    
     private String name;
     private String description;
-    private String resource;
-    
-    private String action;
+    private Long tenantId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    
 }

@@ -7,12 +7,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateUserRequest {
+public class UserRequest {
     
     private String username;
     private String email;
     private String firstName;
     private String lastName;
+    
     private String phone;
     private String avatarUrl;
     private Long tenantId;

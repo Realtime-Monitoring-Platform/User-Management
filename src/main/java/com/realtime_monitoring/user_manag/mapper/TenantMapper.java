@@ -4,8 +4,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 
-import com.realtime_monitoring.user_manag.dto.tenant.TenantRequest;
 import com.realtime_monitoring.user_manag.dto.tenant.TenantResponse;
+import com.realtime_monitoring.user_manag.dto.tenant.TenantRequest;
+import com.realtime_monitoring.user_manag.dto.tenant.UpdateTenantRequest;
 import com.realtime_monitoring.user_manag.model.Tenant;
 
 @Mapper(
@@ -20,5 +21,5 @@ public interface TenantMapper {
     
     TenantResponse toResponse(Tenant tenant);
     
-    Tenant updateEntityFromRequest(TenantRequest request, Tenant tenant);
+    Tenant updateEntityFromRequest(UpdateTenantRequest request, Tenant tenant);
 }

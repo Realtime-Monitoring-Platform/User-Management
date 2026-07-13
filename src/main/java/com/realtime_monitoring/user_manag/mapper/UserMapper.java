@@ -4,8 +4,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 
-import com.realtime_monitoring.user_manag.dto.user.CreateUserRequest;
-import com.realtime_monitoring.user_manag.dto.user.ResponseUserRequest;
+import com.realtime_monitoring.user_manag.dto.user.UpdateUserRequest;
+import com.realtime_monitoring.user_manag.dto.user.UserRequest;
+import com.realtime_monitoring.user_manag.dto.user.UserResponse;
 import com.realtime_monitoring.user_manag.model.User;
 
 @Mapper(
@@ -15,8 +16,8 @@ import com.realtime_monitoring.user_manag.model.User;
 
 public interface UserMapper {
     
-    User toEntity(CreateUserRequest request);
+    User toEntity(UserRequest request);
     
-    ResponseUserRequest toResponse(User user);
-    User updateEntityFromRequest(CreateUserRequest request, User user);
+    UserResponse toResponse(User user);
+    User updateEntityFromRequest(UpdateUserRequest request, User user);
 }

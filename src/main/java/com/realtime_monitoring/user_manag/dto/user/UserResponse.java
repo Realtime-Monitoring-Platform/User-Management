@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseUserRequest {
+public class UserResponse {
     
     private Long id;
     private String username;
@@ -19,6 +19,7 @@ public class ResponseUserRequest {
     private String avatarUrl;
     private String status;
     private LocalDateTime lastLogin;
+    
     private Long tenantId;
     
     private LocalDateTime createdAt;

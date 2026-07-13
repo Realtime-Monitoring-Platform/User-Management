@@ -1,5 +1,5 @@
 package com.realtime_monitoring.user_manag.service;
 
-public class TeamService {
+public interface TeamService {
     
 }

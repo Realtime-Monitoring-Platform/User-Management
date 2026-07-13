@@ -4,21 +4,21 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 
-import com.realtime_monitoring.user_manag.dto.permissions.PermissionRequest;
-import com.realtime_monitoring.user_manag.dto.permissions.PermissionResponse;
-import com.realtime_monitoring.user_manag.model.Permission;
+import com.realtime_monitoring.user_manag.dto.role.RoleRequest;
+import com.realtime_monitoring.user_manag.dto.role.RoleResponse;
+import com.realtime_monitoring.user_manag.model.Role;
 
 @Mapper(
     componentModel = MappingConstants.ComponentModel.SPRING,
-    unmappedTargetPolicy = ReportingPolicy.IGNORE
+    unmappedTargetPolicy = ReportingPolicy.IGNORE,
+    uses = PermissionMapper.class
 )
 
 public interface RoleMapper {
     
-    Permission toEntity(PermissionRequest request);
+    Role toEntity(RoleRequest request);
     
-
-    PermissionResponse toResponse(Permission permission);
+    RoleResponse toResponse(Role role);
     
-    Permission updateEntityFromRequest(PermissionRequest request, Permission permission);
+    Role updateEntityFromRequest(RoleRequest request, Role role);
 }

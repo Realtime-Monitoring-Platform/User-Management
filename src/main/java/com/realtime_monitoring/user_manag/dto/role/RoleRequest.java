@@ -1,4 +1,4 @@
-package com.realtime_monitoring.user_manag.dto.permissions;
+package com.realtime_monitoring.user_manag.dto.role;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,11 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PermissionRequest {
+public class RoleRequest {
+    
     private String name;
     private String description;
-    private String resource;
-    private String action;
-    
     
 }
