@@ -18,4 +18,5 @@ public class TeamResponse {
     private Long tenantId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    
 }

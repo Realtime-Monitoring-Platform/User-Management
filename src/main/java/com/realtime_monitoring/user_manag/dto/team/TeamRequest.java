@@ -8,10 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TeamRequest {
-    
+
     private String name;
     private String description;
-    
     private Long tenantId;
-    
+
 }
