@@ -7,6 +7,7 @@ import com.realtime_monitoring.user_manag.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
+
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor

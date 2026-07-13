@@ -1,5 +1,11 @@
 package com.realtime_monitoring.user_manag.imp;
 
-public class TenantServiceImpl {
+import org.springframework.stereotype.Service;
+
+import com.realtime_monitoring.user_manag.service.TenantService;
+
+@Service
+public class TenantServiceImpl extends TenantService {
+    
     
 }

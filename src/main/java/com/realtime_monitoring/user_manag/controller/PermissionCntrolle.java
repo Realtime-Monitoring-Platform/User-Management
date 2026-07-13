@@ -7,6 +7,7 @@ import com.realtime_monitoring.user_manag.service.PermissionService;
 
 import lombok.RequiredArgsConstructor;
 
+
 @RestController
 @RequestMapping("/api/permissions")
 @RequiredArgsConstructor

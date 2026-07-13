@@ -2,6 +2,7 @@ package com.realtime_monitoring.user_manag.dto.role;
 
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 import com.realtime_monitoring.user_manag.dto.permissions.PermissionResponse;
 
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RoleResponse {
     
-    private Long id;
+    private UUID id;
     private String name;
     private String description;
     private Set<PermissionResponse> permissions;

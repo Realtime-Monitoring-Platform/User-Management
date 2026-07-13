@@ -13,5 +13,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/roles")
 @RequiredArgsConstructor
 public class RoleController {
+    
     private final RoleService roleService;
 }

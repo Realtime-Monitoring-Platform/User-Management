@@ -1,6 +1,7 @@
 package com.realtime_monitoring.user_manag.dto.team;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,12 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TeamResponse {
-
-    private Long id;
-    
+    private UUID id;
     private String name;
     private String description;
-    private Long tenantId;
+    private UUID tenantId;
+    
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     

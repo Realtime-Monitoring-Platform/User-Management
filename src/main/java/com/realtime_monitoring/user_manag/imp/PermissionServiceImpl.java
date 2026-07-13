@@ -1,5 +1,11 @@
 package com.realtime_monitoring.user_manag.imp;
 
-public class PermissionServiceImpl {
+import org.springframework.stereotype.Service;
+
+import com.realtime_monitoring.user_manag.service.PermissionService;
+
+@Service
+public class PermissionServiceImpl implements PermissionService {
+    
     
 }
