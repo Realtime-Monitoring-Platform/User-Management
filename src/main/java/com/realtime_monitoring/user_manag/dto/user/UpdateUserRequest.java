@@ -1,5 +1,7 @@
 package com.realtime_monitoring.user_manag.dto.user;
 
+import java.util.UUID;
+
 import com.realtime_monitoring.user_manag.model.UserStatus;
 
 import lombok.AllArgsConstructor;
@@ -18,6 +20,6 @@ public class UpdateUserRequest {
 	private String lastName;
 	private String phone;
 	private String avatarUrl;
-	private Long tenantId;
+	private UUID tenantId;
 	private UserStatus status;
 }

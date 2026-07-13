@@ -1,5 +1,7 @@
 package com.realtime_monitoring.user_manag.dto.user;
 
+import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +18,7 @@ public class UserRequest {
     
     private String phone;
     private String avatarUrl;
-    private Long tenantId;
+    private UUID tenantId;
     
     
 }
