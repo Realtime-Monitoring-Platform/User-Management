@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.realtime_monitoring.user_manag.dto.permissions.PermissionRequest;
 import com.realtime_monitoring.user_manag.dto.permissions.PermissionResponse;
+import com.realtime_monitoring.user_manag.mapper.PermissionMapper;
 import com.realtime_monitoring.user_manag.repository.PermissionRepository;
 import com.realtime_monitoring.user_manag.service.PermissionService;
 
@@ -17,10 +18,10 @@ import lombok.RequiredArgsConstructor;
 public class PermissionServiceImpl implements PermissionService {
 
     private final PermissionRepository permissionRepository;
+    private final PermissionMapper permissionMapper;
     @Override
     public List<PermissionResponse> getAllPermissions() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllPermissions'");
+        return this.permissionRepository.findAll().stream().map(permissionMapper::toResponse).toList();
     }
 
     @Override
