@@ -9,26 +9,54 @@ import com.realtime_monitoring.user_manag.service.TenantService;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
 @RestController
 @RequestMapping("/api/v1/tenants")
 @RequiredArgsConstructor
+
 public class TenantController {
     private final TenantService tenantService; 
 
     @PostMapping
     public ResponseEntity<TenantResponse> createTenant(@RequestBody TenantRequest entity) {
         TenantResponse tenantResponse = this.tenantService.createTenant(entity);
-        return ResponseEntity.status(HttpStatus.CREATED).body(tenantResponse);
+        return ResponseEtenatntity.status(HttpStatus.CREATED).body(tenantResponse);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<TenantResponse> getTenantById(@PathVariable UUID id) {
+        TenantResponse tenantResponse = this.tenantService.getTenantById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(tenantResponse);
+    }
     
+    @GetMapping
+    public ResponseEntity<List<TenantResponse>> getTenants() {
+        List<TenantResponse> tenantResponses = this.tenantService.getAllTenants();
+        return ResponseEntity.status(HttpStatus.OK).body(tenantResponses);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTenantById(@PathVariable UUID id) {
+        this.tenantService.deleteTenant(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+
+
     
     
 }

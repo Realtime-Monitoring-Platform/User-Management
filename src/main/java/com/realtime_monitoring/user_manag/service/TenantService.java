@@ -13,5 +13,6 @@ public interface TenantService {
     TenantResponse createTenant(TenantRequest TenantRequest);
     TenantResponse updateTenant(UUID TenantId, TenantRequest TenantRequest);
     void deleteTenant(UUID TenantId);
+    TenantResponse getTenantById(UUID TenantId);
     
 }

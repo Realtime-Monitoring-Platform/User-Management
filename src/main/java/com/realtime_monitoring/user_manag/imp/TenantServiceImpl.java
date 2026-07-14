@@ -41,10 +41,18 @@ public class TenantServiceImpl implements TenantService {
         throw new UnsupportedOperationException("Unimplemented method 'updateTenant'");
     }
 
+    
+
     @Override
     public void deleteTenant(UUID TenantId) {
         this.tenantRepository.deleteById(TenantId);;
 
+    }
+
+    @Override
+    public TenantResponse getTenantById(UUID TenantId) {
+        Tenant tenant = this.tenantRepository.findById(TenantId).orElseThrow(() -> new IllegalArgumentException("Tenant not found"));
+        return this.tenantMapper.toResponse(tenant);
     }
     
     
