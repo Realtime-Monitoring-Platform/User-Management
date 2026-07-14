@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,8 +29,16 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/")
-    public List<UserResponse> getAllUsers() {
-        return this.userService.getAllUsers();
+    public Page<UserResponse> getAllUsers(
+        @PageableDefault(
+                page = 0,
+                size = 10,
+                sort = "createdAt"
+                //direction = Sort.Direction.DESC
+        )
+        Pageable pageable
+    ) {
+        return this.userService.getAllUsers(pageable);
     }
     
     @PostMapping

@@ -3,6 +3,10 @@ package com.realtime_monitoring.user_manag.controller;
 import java.util.List;
 import java.util.UUID;
 
+import org.hibernate.query.SortDirection;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,10 +32,18 @@ public class RoleController {
     private final RoleService roleService;
 
     @GetMapping
-    public ResponseEntity<List<RoleResponse>> getAllRoles() {
+    public ResponseEntity<Page<RoleResponse>> getAllRoles(
+        @PageableDefault(
+                page = 0,
+                size = 10,
+                sort = "createdAt"
+                //direction = SortDirection.ASCENDING
+        )
+        Pageable pageable
+    ) {
 
         return ResponseEntity.ok(
-                roleService.getAllRoles());
+                roleService.getAllRoles(pageable));
     }
 
     @PostMapping

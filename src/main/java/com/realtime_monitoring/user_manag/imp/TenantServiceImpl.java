@@ -3,6 +3,8 @@ package com.realtime_monitoring.user_manag.imp;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.realtime_monitoring.user_manag.dto.tenant.TenantRequest;
@@ -25,8 +27,8 @@ public class TenantServiceImpl implements TenantService {
 
 
     @Override
-    public List<TenantResponse> getAllTenants() {
-        return this.tenantRepository.findAll().stream().map(tenantMapper::toResponse).toList();
+    public Page<TenantResponse> getAllTenants(Pageable pageable) {
+        return this.tenantRepository.findAll(pageable).map(tenantMapper::toResponse);
     }
 
     @Override

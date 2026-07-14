@@ -3,6 +3,8 @@ package com.realtime_monitoring.user_manag.imp;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,12 +27,10 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<PermissionResponse> getAllPermissions() {
+    public Page<PermissionResponse> getAllPermissions(Pageable pageable) {
 
-        return permissionRepository.findAll()
-                .stream()
-                .map(permissionMapper::toResponse)
-                .toList();
+        return permissionRepository.findAll(pageable)
+                .map(permissionMapper::toResponse);
     }
 
 

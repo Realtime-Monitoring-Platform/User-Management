@@ -3,6 +3,8 @@ package com.realtime_monitoring.user_manag.imp;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.realtime_monitoring.user_manag.dto.team.TeamRequest;
@@ -26,9 +28,8 @@ public class TeamServiceImpl implements TeamService {
     private final TeamMapper teamMapper;
 
     @Override
-    public List<TeamResponse> getAllTeams() {
-        return this.teamRepository.findAll().stream().map(teamMapper::toResponse).toList();
-
+    public Page<TeamResponse> getAllTeams(Pageable pageable) {
+        return this.teamRepository.findAll(pageable).map(teamMapper::toResponse);
     }
 
     @Override

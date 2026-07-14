@@ -3,6 +3,8 @@ package com.realtime_monitoring.user_manag.imp;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.realtime_monitoring.user_manag.dto.role.RoleRequest;
@@ -25,8 +27,8 @@ public class RoleServiceImpl implements RoleService {
     private final PermissionRepository permissionRepository;
 
     @Override
-    public List<RoleResponse> getAllRoles() {
-        return this.roleRepository.findAll().stream().map(roleMapper::toResponse).toList();
+    public Page<RoleResponse> getAllRoles(Pageable pageable) {
+        return this.roleRepository.findAll(pageable).map(roleMapper::toResponse);
     }
 
     @Override
