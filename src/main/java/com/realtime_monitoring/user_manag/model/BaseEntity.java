@@ -3,6 +3,7 @@ package com.realtime_monitoring.user_manag.model;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -28,12 +29,11 @@ public abstract class BaseEntity {
     private UUID id;
 
     @CreatedDate
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime created_at;
+    @Column( nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
-    @LastModifiedDate
-    @Column(name = "updated_at")
-    private LocalDateTime updated_at;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
 
 }

@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -33,8 +32,10 @@ public class TenantController {
 
     @PostMapping
     public ResponseEntity<TenantResponse> createTenant(@RequestBody TenantRequest entity) {
+        System.out.println("Received request to create tenant::::::::::::::::::::::::::::::::::::::::" + entity);
         TenantResponse tenantResponse = this.tenantService.createTenant(entity);
-        return ResponseEtenatntity.status(HttpStatus.CREATED).body(tenantResponse);
+        System.out.println("Created tenant response::::::::::::::::::::::::::::::::::::::::" + tenantResponse);
+        return ResponseEntity.status(HttpStatus.CREATED).body(tenantResponse);
     }
 
     @GetMapping("/{id}")

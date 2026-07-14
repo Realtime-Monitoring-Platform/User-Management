@@ -20,7 +20,6 @@ public class TeamServiceImpl implements TeamService {
 
     private final TeamRepository teamRepository;
     private final TeamMapper teamMapper;
-    private final TeamService TeamService;
 
     @Override
     public List<TeamResponse> getAllTeams() {

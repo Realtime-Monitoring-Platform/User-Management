@@ -20,8 +20,7 @@ public interface TenantMapper {
     
     Tenant toEntity(TenantRequest request);
     
-    @Mapping(target = "createdAt", source = "created_at")
-    @Mapping(target = "updatedAt", source = "updated_at")
+    
     TenantResponse toResponse(Tenant tenant);
     
     void updateEntityFromRequest(UpdateTenantRequest request, @MappingTarget Tenant tenant);

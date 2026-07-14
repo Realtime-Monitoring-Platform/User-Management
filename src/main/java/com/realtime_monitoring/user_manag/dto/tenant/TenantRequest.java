@@ -1,5 +1,7 @@
 package com.realtime_monitoring.user_manag.dto.tenant;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,5 +16,6 @@ public class TenantRequest {
     
     private String logoUrl;
     private String status;
+    
     
 }
