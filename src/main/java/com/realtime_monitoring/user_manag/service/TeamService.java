@@ -5,12 +5,13 @@ import java.util.UUID;
 
 import com.realtime_monitoring.user_manag.dto.team.TeamRequest;
 import com.realtime_monitoring.user_manag.dto.team.TeamResponse;
+import com.realtime_monitoring.user_manag.dto.team.UpdateTeamRequest;
 
 public interface TeamService {
 
     List<TeamResponse> getAllTeams();
     TeamResponse createTeam(TeamRequest TeamRequest);
-    TeamResponse updateTeam(UUID TeamId, TeamRequest TeamRequest);
+    TeamResponse updateTeam(UUID TeamId, UpdateTeamRequest TeamRequest);
     void deleteTeam(UUID TeamId);
     
 }

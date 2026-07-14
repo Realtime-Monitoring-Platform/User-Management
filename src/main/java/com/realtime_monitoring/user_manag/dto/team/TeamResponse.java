@@ -15,7 +15,6 @@ public class TeamResponse {
     private String name;
     private String description;
     private UUID tenantId;
-    
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     

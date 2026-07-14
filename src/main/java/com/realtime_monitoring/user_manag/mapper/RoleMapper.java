@@ -20,8 +20,7 @@ public interface RoleMapper {
     
     Role toEntity(RoleRequest request);
     
-    @Mapping(target = "createdAt", source = "created_at")
-    @Mapping(target = "updatedAt", source = "updated_at")
+    
     RoleResponse toResponse(Role role);
     
     void updateEntityFromRequest(RoleRequest request, @MappingTarget Role role);

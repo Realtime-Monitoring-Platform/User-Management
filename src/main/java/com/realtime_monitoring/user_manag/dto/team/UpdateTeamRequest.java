@@ -1,5 +1,7 @@
 package com.realtime_monitoring.user_manag.dto.team;
 
+import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,11 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateTeamRequest {
-
     private String name;
     private String description;
-
-    
-    private Long tenantId;
-
+    private UUID tenantId;
 }

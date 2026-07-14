@@ -19,8 +19,6 @@ public interface PermissionMapper {
     
     Permission toEntity(PermissionRequest request);
     
-    @Mapping(target = "createdAt", source = "created_at")
-    @Mapping(target = "updatedAt", source = "updated_at")
     PermissionResponse toResponse(Permission permission);
     
 

@@ -21,10 +21,8 @@ public interface TeamMapper {
     Team toEntity(TeamRequest request);
     
     @Mapping(target = "tenantId", source = "tenant.id")
-    @Mapping(target = "createdAt", source = "created_at")
-    @Mapping(target = "updatedAt", source = "updated_at")
     TeamResponse toResponse(Team team);
-    
+        
     @Mapping(target = "tenant", ignore = true)
     void updateEntityFromRequest(UpdateTeamRequest request, @MappingTarget Team team);
 }

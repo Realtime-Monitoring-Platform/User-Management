@@ -10,6 +10,7 @@ import com.realtime_monitoring.user_manag.dto.role.RoleResponse;
 import com.realtime_monitoring.user_manag.mapper.RoleMapper;
 import com.realtime_monitoring.user_manag.mapper.UserMapper;
 import com.realtime_monitoring.user_manag.model.Role;
+import com.realtime_monitoring.user_manag.repository.PermissionRepository;
 import com.realtime_monitoring.user_manag.repository.RoleRepository;
 import com.realtime_monitoring.user_manag.service.RoleService;
 
@@ -21,6 +22,7 @@ public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
     private final RoleMapper roleMapper;
+    private final PermissionRepository permissionRepository;
 
     @Override
     public List<RoleResponse> getAllRoles() {
