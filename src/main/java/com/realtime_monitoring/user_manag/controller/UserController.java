@@ -32,64 +32,41 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+        private final UserService userService;
 
-    @GetMapping
-    public ResponseEntity<Page<UserResponse>> getAllUsers(
-            @PageableDefault(page = 0, size = 10, sort = "createdAt"
-            // direction = Sort.Direction.DESC
-            ) Pageable pageable) {
+        @GetMapping
+        public ResponseEntity<Page<UserResponse>> getAllUsers(
 
-        return ResponseEntity.ok(
-                userService.getAllUsers(pageable));
-    }
+                @PageableDefault(page = 0, size = 10, sort = "createdAt") Pageable pageable) {
+                return ResponseEntity.ok(userService.getAllUsers(pageable));
+        }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> getUserById(
-            @PathVariable UUID id) {
+        @GetMapping("/{id}")
+        public ResponseEntity<UserResponse> getUserById(@PathVariable UUID id) {
+                return ResponseEntity.ok(userService.getUserById(id));
+        }
 
-        return ResponseEntity.ok(
-                userService.getUserById(id));
-    }
+        @PostMapping
+        public ResponseEntity<UserResponse> createUser(
+                @RequestBody UserRequest request) {
+                UserResponse response = userService.createUser(request);
+                return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        }
 
-    @PostMapping
-    public ResponseEntity<UserResponse> createUser(
-            @RequestBody UserRequest request) {
+        @PutMapping("/{id}")
+        public ResponseEntity<UserResponse> updateUser(@PathVariable UUID id, @RequestBody UpdateUserRequest request) {
+                return ResponseEntity.ok(userService.update(id, request));
+        }
 
-        UserResponse response = userService.createUser(request);
+        @DeleteMapping("/{id}")
+        public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
+                userService.delete(id);
+                return ResponseEntity.noContent().build();
+        }
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(response);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<UserResponse> updateUser(
-            @PathVariable UUID id,
-            @RequestBody UpdateUserRequest request) {
-
-        return ResponseEntity.ok(
-                userService.update(id, request));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(
-            @PathVariable UUID id) {
-
-        userService.delete(id);
-
-        return ResponseEntity
-                .noContent()
-                .build();
-    }
-
-    @PatchMapping("/{id}/status")
-    public ResponseEntity<UserResponse> updateUserStatus(
-            @PathVariable UUID id,
-            @RequestParam boolean enabled) {
-
-        return ResponseEntity.ok(
-                userService.updateStatus(id, enabled));
-    }
+        @PatchMapping("/{id}/status")
+        public ResponseEntity<UserResponse> updateUserStatus(@PathVariable UUID id,@RequestParam boolean enabled) {
+                return ResponseEntity.ok(userService.updateStatus(id, enabled));
+        }
 
 }
