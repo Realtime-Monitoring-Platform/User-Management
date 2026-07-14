@@ -23,15 +23,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
-
-
 @RestController
 @RequestMapping("/api/v1/tenants")
 @RequiredArgsConstructor
 
 public class TenantController {
-    private final TenantService tenantService; 
+    private final TenantService tenantService;
 
     @PostMapping
     public ResponseEntity<TenantResponse> createTenant(@RequestBody TenantRequest entity) {
@@ -46,17 +43,12 @@ public class TenantController {
         TenantResponse tenantResponse = this.tenantService.getTenantById(id);
         return ResponseEntity.status(HttpStatus.OK).body(tenantResponse);
     }
-    
+
     @GetMapping
     public ResponseEntity<Page<TenantResponse>> getTenants(
-        @PageableDefault(
-            page = 0,
-            size = 10,
-            sort = "createdAt"
+            @PageableDefault(page = 0, size = 10, sort = "createdAt"
             // direction = Sort.Direction.DESC
-        )
-        Pageable pageable
-    ) {
+            ) Pageable pageable) {
         Page<TenantResponse> tenantResponses = this.tenantService.getAllTenants(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(tenantResponses);
     }
@@ -67,8 +59,4 @@ public class TenantController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-
-
-    
-    
 }

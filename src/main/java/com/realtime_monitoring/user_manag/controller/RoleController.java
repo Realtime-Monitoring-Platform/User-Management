@@ -33,14 +33,9 @@ public class RoleController {
 
     @GetMapping
     public ResponseEntity<Page<RoleResponse>> getAllRoles(
-        @PageableDefault(
-                page = 0,
-                size = 10,
-                sort = "createdAt"
-                //direction = SortDirection.ASCENDING
-        )
-        Pageable pageable
-    ) {
+            @PageableDefault(page = 0, size = 10, sort = "createdAt"
+            // direction = SortDirection.ASCENDING
+            ) Pageable pageable) {
 
         return ResponseEntity.ok(
                 roleService.getAllRoles(pageable));

@@ -32,13 +32,10 @@ public class PermissionController {
     private final PermissionService permissionService;
 
     @GetMapping
-    public ResponseEntity<Page<PermissionResponse>> getAllPermissions(@PageableDefault(
-                page = 0,
-                size = 10,
-                sort = "createdAt"
-               // direction = Sort.Direction.DESC
-        )
-        Pageable pageable) {
+    public ResponseEntity<Page<PermissionResponse>> getAllPermissions(
+            @PageableDefault(page = 0, size = 10, sort = "createdAt"
+            // direction = Sort.Direction.DESC
+            ) Pageable pageable) {
 
         return ResponseEntity.ok(
                 permissionService.getAllPermissions(pageable));

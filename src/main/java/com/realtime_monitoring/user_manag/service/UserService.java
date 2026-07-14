@@ -18,5 +18,6 @@ public interface UserService {
     UserResponse update(UUID id, UpdateUserRequest request);
     void delete(UUID id);
     List<UserResponse> findByTenant(UUID tenantId);
+    UserResponse updateStatus(UUID id, boolean enabled);
 
 }

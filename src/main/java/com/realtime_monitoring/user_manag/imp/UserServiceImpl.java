@@ -114,4 +114,14 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public UserResponse updateStatus(UUID id, boolean enabled) {
+        User user = findById(id);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found");
+        }
+        user.setStatus(enabled ? UserStatus.ACTIVE : UserStatus.INACTIVE);
+        return userMapper.toResponse(userRepository.save(user));
+    }
+
 }
