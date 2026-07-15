@@ -21,8 +21,7 @@ public interface UserMapper {
     User toEntity(UserRequest request);
     
     @Mapping(target = "tenantId", source = "tenant.id")
-    @Mapping(target = "createdAt", source = "created_at")
-    @Mapping(target = "updatedAt", source = "updated_at")
+   
     UserResponse toResponse(User user);
 
     @Mapping(target = "tenant", ignore = true)
