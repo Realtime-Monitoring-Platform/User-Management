@@ -11,10 +11,10 @@ import com.realtime_monitoring.user_manag.dto.permissions.PermissionResponse;
 
 
 public interface PermissionService {
-
+    
     Page<PermissionResponse> getAllPermissions(Pageable pageable);
     PermissionResponse createPermission(PermissionRequest PermissionRequest);
     PermissionResponse updatePermission(UUID PermissionId, PermissionRequest PermissionRequest);
     void deletePermission(UUID PermissionId);
-    
+
 }

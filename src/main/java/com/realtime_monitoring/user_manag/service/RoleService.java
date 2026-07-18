@@ -10,10 +10,10 @@ import com.realtime_monitoring.user_manag.dto.role.RoleRequest;
 import com.realtime_monitoring.user_manag.dto.role.RoleResponse;
 
 public interface RoleService {
+    
     Page<RoleResponse> getAllRoles(Pageable pageable);
     RoleResponse createRole(RoleRequest roleRequest);
     RoleResponse updateRole(UUID roleId, RoleRequest roleRequest);
     void deleteRole(UUID roleId);
 
-    
 }

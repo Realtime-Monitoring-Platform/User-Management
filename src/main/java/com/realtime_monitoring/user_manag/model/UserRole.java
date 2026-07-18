@@ -18,7 +18,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRole extends BaseEntity {
-
     
 
     @ManyToOne
