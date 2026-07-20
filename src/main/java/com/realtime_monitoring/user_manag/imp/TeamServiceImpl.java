@@ -47,7 +47,7 @@ public class TeamServiceImpl implements TeamService {
     public TeamResponse updateTeam(UUID teamId, UpdateTeamRequest request) {
         Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResourceNotFoundException("Team not found"));
         teamMapper.updateEntityFromRequest(request, team );
-        System.out.println("Updated team::::::::::::::::::::::::::::::::::::::::" + team);
+        System.out.println("Updated team: " + team);
         if (request.getTenantId() != null) {
             Tenant tenant = tenantRepository.findById(request.getTenantId()).orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
             team.setTenant(tenant);
