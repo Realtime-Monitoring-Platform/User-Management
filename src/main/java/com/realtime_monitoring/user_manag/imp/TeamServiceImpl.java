@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.realtime_monitoring.user_manag.dto.team.TeamRequest;
 import com.realtime_monitoring.user_manag.dto.team.TeamResponse;
 import com.realtime_monitoring.user_manag.dto.team.UpdateTeamRequest;
+import com.realtime_monitoring.user_manag.exception.ResourceNotFoundException;
 import com.realtime_monitoring.user_manag.mapper.TeamMapper;
 import com.realtime_monitoring.user_manag.mapper.UserMapper;
 import com.realtime_monitoring.user_manag.model.Team;
@@ -36,7 +37,7 @@ public class TeamServiceImpl implements TeamService {
     public TeamResponse createTeam(TeamRequest request) {
         Team team = teamMapper.toEntity(request);
         Tenant tenant = tenantRepository.findById(request.getTenantId())
-                .orElseThrow(() -> new RuntimeException("Tenant not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
         team.setTenant(tenant);
         Team savedTeam = teamRepository.save(team);
         return teamMapper.toResponse(savedTeam);
@@ -44,11 +45,11 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public TeamResponse updateTeam(UUID teamId, UpdateTeamRequest request) {
-        Team team = teamRepository.findById(teamId).orElseThrow(() -> new RuntimeException("Team not found"));
+        Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResourceNotFoundException("Team not found"));
         teamMapper.updateEntityFromRequest(request, team );
         System.out.println("Updated team::::::::::::::::::::::::::::::::::::::::" + team);
         if (request.getTenantId() != null) {
-            Tenant tenant = tenantRepository.findById(request.getTenantId()).orElseThrow(() -> new RuntimeException("Tenant not found"));
+            Tenant tenant = tenantRepository.findById(request.getTenantId()).orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
             team.setTenant(tenant);
         }
 
@@ -60,7 +61,7 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public void deleteTeam(UUID teamId) {
         if (!teamRepository.existsById(teamId)) {
-            throw new RuntimeException("Team not found");
+            throw new ResourceNotFoundException("Team not found");
         }
         teamRepository.deleteById(teamId);
     }

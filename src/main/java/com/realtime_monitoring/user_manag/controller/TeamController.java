@@ -31,27 +31,18 @@ public class TeamController {
     private final TeamService teamService;
 
     @GetMapping
-    public ResponseEntity<Page<TeamResponse>> getAllTeams(
-            @PageableDefault(page = 0, size = 10, sort = "createdAt"
-            // direction = Sort.Direction.DESC
-            ) Pageable pageable) {
-
+    public ResponseEntity<Page<TeamResponse>> getAllTeams(@PageableDefault(page = 0, size = 10, sort = "createdAt") Pageable pageable) {
         return ResponseEntity.ok(teamService.getAllTeams(pageable));
     }
 
     @PostMapping
-    public ResponseEntity<TeamResponse> createTeam(
-            @RequestBody TeamRequest request) {
-
+    public ResponseEntity<TeamResponse> createTeam(@RequestBody TeamRequest request) {
         TeamResponse response = teamService.createTeam(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TeamResponse> updateTeam(
-            @PathVariable UUID id,
-            @RequestBody UpdateTeamRequest request) {
-
+    public ResponseEntity<TeamResponse> updateTeam(@PathVariable UUID id,@RequestBody UpdateTeamRequest request) {
         TeamResponse response = teamService.updateTeam(id, request);
         System.out.println("Updated team response::::::::::::::::::::::::::::::::::::::::" + response);
         return ResponseEntity.ok(response);

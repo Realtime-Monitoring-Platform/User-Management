@@ -1,9 +1,6 @@
 package com.realtime_monitoring.user_manag.controller;
 
-import java.util.List;
 import java.util.UUID;
-
-import org.hibernate.query.SortDirection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -32,42 +29,25 @@ public class RoleController {
     private final RoleService roleService;
 
     @GetMapping
-    public ResponseEntity<Page<RoleResponse>> getAllRoles(
-            @PageableDefault(page = 0, size = 10, sort = "createdAt"
-            // direction = SortDirection.ASCENDING
-            ) Pageable pageable) {
-
-        return ResponseEntity.ok(
-                roleService.getAllRoles(pageable));
+    public ResponseEntity<Page<RoleResponse>> getAllRoles(@PageableDefault(page = 0, size = 10, sort = "createdAt") Pageable pageable) {
+        return ResponseEntity.ok(roleService.getAllRoles(pageable));
     }
 
     @PostMapping
-    public ResponseEntity<RoleResponse> createRole(
-            @RequestBody RoleRequest request) {
-
+    public ResponseEntity<RoleResponse> createRole(@RequestBody RoleRequest request) {
         RoleResponse response = roleService.createRole(request);
-
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RoleResponse> updateRole(
-            @PathVariable UUID id,
-            @RequestBody RoleRequest request) {
-
+    public ResponseEntity<RoleResponse> updateRole(@PathVariable UUID id,@RequestBody RoleRequest request) {
         RoleResponse response = roleService.updateRole(id, request);
-
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRole(
-            @PathVariable UUID id) {
-
+    public ResponseEntity<Void> deleteRole(@PathVariable UUID id) {
         roleService.deleteRole(id);
-
         return ResponseEntity.noContent().build();
     }
 }
