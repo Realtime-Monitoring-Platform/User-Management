@@ -13,10 +13,8 @@ import com.realtime_monitoring.user_manag.dto.user.UpdateUserRequest;
 import com.realtime_monitoring.user_manag.dto.user.UserRequest;
 import com.realtime_monitoring.user_manag.dto.user.UserResponse;
 import com.realtime_monitoring.user_manag.mapper.UserMapper;
-import com.realtime_monitoring.user_manag.model.Tenant;
 import com.realtime_monitoring.user_manag.model.User;
 import com.realtime_monitoring.user_manag.model.UserStatus;
-import com.realtime_monitoring.user_manag.repository.TenantRepository;
 import com.realtime_monitoring.user_manag.repository.UserRepo;
 
 import com.realtime_monitoring.user_manag.service.UserService;
@@ -29,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepository;
-    private final TenantRepository tenantRepository;
+    
     private final UserMapper userMapper;
 
     @Override
@@ -37,7 +35,7 @@ public class UserServiceImpl implements UserService {
         validateEmail(request.getEmail());
         validateUsername(request.getUsername());
         User user = userMapper.toEntity(request);
-        user.setTenant(getTenant(request.getTenantId()).orElse(null));
+       // user.setTenant(getTenant(request.getTenantId()).orElse(null));
         user.setStatus(UserStatus.ACTIVE);
         return userMapper.toResponse(userRepository.save(user));
     }
@@ -70,9 +68,9 @@ public class UserServiceImpl implements UserService {
 
         userMapper.updateEntityFromRequest(request, user);
 
-        if (request.getTenantId() != null) {
-            user.setTenant(getTenant(request.getTenantId()).orElse(null));
-        }
+        // if (request.getTenantId() != null) {
+        //     user.setTenant(getTenant(request.getTenantId()).orElse(null));
+        // }
 
         return userMapper.toResponse(userRepository.save(user));
     }
@@ -98,9 +96,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    private Optional<Tenant> getTenant(UUID id) {
-        return tenantRepository.findById(id);
-    }
+    
 
     private void validateEmail(String email) {
         if (userRepository.existsByEmail(email)) {

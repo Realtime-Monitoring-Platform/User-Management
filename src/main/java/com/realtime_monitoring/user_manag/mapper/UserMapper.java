@@ -17,13 +17,9 @@ import com.realtime_monitoring.user_manag.model.User;
 )
 
 public interface UserMapper {
-    
     User toEntity(UserRequest request);
     
-    @Mapping(target = "tenantId", source = "tenant.id")
-   
     UserResponse toResponse(User user);
 
-    @Mapping(target = "tenant", ignore = true)
     void updateEntityFromRequest(UpdateUserRequest request, @MappingTarget User user);
 }

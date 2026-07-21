@@ -20,9 +20,7 @@ public interface TeamMapper {
     
     Team toEntity(TeamRequest request);
     
-    @Mapping(target = "tenantId", source = "tenant.id")
     TeamResponse toResponse(Team team);
         
-    @Mapping(target = "tenant", ignore = true)
     void updateEntityFromRequest(UpdateTeamRequest request, @MappingTarget Team team);
 }

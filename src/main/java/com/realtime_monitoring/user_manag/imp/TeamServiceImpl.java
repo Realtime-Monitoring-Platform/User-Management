@@ -14,9 +14,7 @@ import com.realtime_monitoring.user_manag.exception.ResourceNotFoundException;
 import com.realtime_monitoring.user_manag.mapper.TeamMapper;
 import com.realtime_monitoring.user_manag.mapper.UserMapper;
 import com.realtime_monitoring.user_manag.model.Team;
-import com.realtime_monitoring.user_manag.model.Tenant;
 import com.realtime_monitoring.user_manag.repository.TeamRepository;
-import com.realtime_monitoring.user_manag.repository.TenantRepository;
 import com.realtime_monitoring.user_manag.service.TeamService;
 
 import lombok.RequiredArgsConstructor;
@@ -24,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class TeamServiceImpl implements TeamService {
-    private final TenantRepository tenantRepository;
+    //private final TenantRepository tenantRepository;
     private final TeamRepository teamRepository;
     private final TeamMapper teamMapper;
 
@@ -36,9 +34,9 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public TeamResponse createTeam(TeamRequest request) {
         Team team = teamMapper.toEntity(request);
-        Tenant tenant = tenantRepository.findById(request.getTenantId())
-        .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
-        team.setTenant(tenant);
+        //Tenant tenant = tenantRepository.findById(request.getTenantId())
+       // .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
+       // team.setTenant(tenant);
         Team savedTeam = teamRepository.save(team);
         return teamMapper.toResponse(savedTeam);
     }
@@ -48,10 +46,10 @@ public class TeamServiceImpl implements TeamService {
         Team team = teamRepository.findById(teamId).orElseThrow(() -> new ResourceNotFoundException("Team not found"));
         teamMapper.updateEntityFromRequest(request, team );
         System.out.println("Updated team: " + team);
-        if (request.getTenantId() != null) {
-            Tenant tenant = tenantRepository.findById(request.getTenantId()).orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
-            team.setTenant(tenant);
-        }
+        // if (request.getTenantId() != null) {
+        //     Tenant tenant = tenantRepository.findById(request.getTenantId()).orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
+        //     team.setTenant(tenant);
+        // }
 
         Team updatedTeam = teamRepository.save(team);
         return teamMapper.toResponse(updatedTeam);

@@ -1,5 +1,7 @@
 package com.realtime_monitoring.user_manag.model;
 
+import java.util.UUID;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -22,8 +24,7 @@ public class Team extends BaseEntity {
 
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tenant_id",nullable = false)
-    private Tenant tenant;
+    
+    private UUID tenantId;
 
 }
