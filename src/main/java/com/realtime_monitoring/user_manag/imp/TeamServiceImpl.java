@@ -13,6 +13,7 @@ import com.realtime_monitoring.user_manag.dto.team.UpdateTeamRequest;
 import com.realtime_monitoring.user_manag.exception.ResourceNotFoundException;
 import com.realtime_monitoring.user_manag.mapper.TeamMapper;
 import com.realtime_monitoring.user_manag.mapper.UserMapper;
+import com.realtime_monitoring.user_manag.kafka.UserProducer;
 import com.realtime_monitoring.user_manag.model.Team;
 import com.realtime_monitoring.user_manag.repository.TeamRepository;
 import com.realtime_monitoring.user_manag.service.TeamService;
@@ -25,6 +26,7 @@ public class TeamServiceImpl implements TeamService {
     //private final TenantRepository tenantRepository;
     private final TeamRepository teamRepository;
     private final TeamMapper teamMapper;
+    private final UserProducer userProducer;
 
     @Override
     public Page<TeamResponse> getAllTeams(Pageable pageable) {
@@ -38,6 +40,7 @@ public class TeamServiceImpl implements TeamService {
        // .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
        // team.setTenant(tenant);
         Team savedTeam = teamRepository.save(team);
+        userProducer.sendTeamCreation(savedTeam);
         return teamMapper.toResponse(savedTeam);
     }
 
@@ -52,6 +55,7 @@ public class TeamServiceImpl implements TeamService {
         // }
 
         Team updatedTeam = teamRepository.save(team);
+        userProducer.sendTeamUpdate(updatedTeam);
         return teamMapper.toResponse(updatedTeam);
     }
 

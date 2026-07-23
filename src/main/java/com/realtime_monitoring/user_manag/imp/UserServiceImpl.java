@@ -85,7 +85,9 @@ public class UserServiceImpl implements UserService {
         // user.setTenant(getTenant(request.getTenantId()).orElse(null));
         // }
 
-        return userMapper.toResponse(userRepository.save(user));
+        User updatedUser = userRepository.save(user);
+        userProducer.sendUserUpdate(updatedUser);
+        return userMapper.toResponse(updatedUser);
     }
 
     @Override
