@@ -16,6 +16,7 @@ import com.realtime_monitoring.user_manag.dto.user.UserRequest;
 import com.realtime_monitoring.user_manag.dto.user.UserResponse;
 import com.realtime_monitoring.user_manag.dto.user.UserWithTenantResponse;
 import com.realtime_monitoring.user_manag.grpc.TenantGrpcClient;
+import com.realtime_monitoring.user_manag.kafka.UserProducer;
 import com.realtime_monitoring.user_manag.mapper.UserMapper;
 import com.realtime_monitoring.user_manag.model.User;
 import com.realtime_monitoring.user_manag.model.UserStatus;
@@ -35,8 +36,9 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     private final TenantGrpcClient tenantClient;
-
+    private final UserProducer userProducer;
     // private final TenantGrpcClient tenantClient;
+    
     @Override
     public UserResponse createUser(UserRequest request) {
         validateEmail(request.getEmail());
@@ -44,7 +46,11 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.toEntity(request);
         // user.setTenant(getTenant(request.getTenantId()).orElse(null));
         user.setStatus(UserStatus.ACTIVE);
-        return userMapper.toResponse(userRepository.save(user));
+
+        
+        User savedUser= userRepository.save(user);
+        userProducer.sendUserCreation(savedUser);
+        return userMapper.toResponse(savedUser);
     }
 
     @Override

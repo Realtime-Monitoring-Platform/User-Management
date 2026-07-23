@@ -18,10 +18,11 @@ import static org.springframework.kafka.support.KafkaHeaders.TOPIC;
 public class UserProducer {
     private final KafkaTemplate<String, User> kafkaTemplate;
     public void sendUserCreation(User user ){
-        log.info("sending uuser creation");
-        Message<User> userMessage= MessageBuilder.withPayload(user)
-            .setHeader(TOPIC, "user-creation").build();
-        kafkaTemplate.send(userMessage);
+        log.info("sending user creation: {}", user);
+        // Message<User> userMessage= MessageBuilder.withPayload(user)
+        //     .setHeader(TOPIC, "user-creation").build();
+        
+        kafkaTemplate.send("user-creation", user);
     }
     
 }
