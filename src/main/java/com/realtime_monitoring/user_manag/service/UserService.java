@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import com.realtime_monitoring.user_manag.dto.user.UpdateUserRequest;
 import com.realtime_monitoring.user_manag.dto.user.UserRequest;
 import com.realtime_monitoring.user_manag.dto.user.UserResponse;
+import com.realtime_monitoring.user_manag.dto.user.UserWithTenantResponse;
 
 public interface UserService {
     
@@ -19,5 +20,5 @@ public interface UserService {
     void delete(UUID id);
     List<UserResponse> findByTenant(UUID tenantId);
     UserResponse updateStatus(UUID id, boolean enabled);
-
+    List<UserWithTenantResponse> findAllWithTenant();
 }

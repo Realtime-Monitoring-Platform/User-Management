@@ -1,20 +1,58 @@
+# spring:
+#   application:
+#     name: user_manag
+#   cloud:
+#     config:
+#       enabled: false
+  # config:
+  #   import: optional:configserver:http://localhost:9000
+
+# grpc:
+#  client:
+#   tenant-service:
+#    address:
+#     static://localhost:9095
+#    negotiationType:
+#     plaintext
+# server:
+#   port: 9003
+#spring:
+  # datasource:
+  #   driver-class-name: org.postgresql.Driver
+  #   url: jdbc:postgresql://localhost:5432/postgres
+  #   username: postgres
+  #   password: chedly
+  # jpa:
+  #   hibernate:
+  #     ddl-auto: update
+  #   database: postgresql
+  #   database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 9003
+
+
 spring:
   application:
     name: user_manag
-  config:
-    import: optional:configserver:http://localhost:9000
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: chedly
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  cloud:
+    config:
+      enabled: false
 
 
-# server:
-#   port: 9003
-# spring:
-#   datasource:
-#     driver-class-name: org.postgresql.Driver
-#     url: jdbc:postgresql://localhost:5432/postgres
-#     username: postgres
-#     password: chedly
-#   jpa:
-#     hibernate:
-#       ddl-auto: update
-#     database: postgresql
-#     database-platform: org.hibernate.dialect.PostgreSQLDialect
+grpc:
+  client:
+    tenant-service:
+      address: static://localhost:9095
+      negotiationType: plaintext

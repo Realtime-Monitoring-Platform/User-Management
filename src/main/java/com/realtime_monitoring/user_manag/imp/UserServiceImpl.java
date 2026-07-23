@@ -1,6 +1,7 @@
 package com.realtime_monitoring.user_manag.imp;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -9,9 +10,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.realtime_monitoring.user_manag.dto.tenant.TenantDto;
 import com.realtime_monitoring.user_manag.dto.user.UpdateUserRequest;
 import com.realtime_monitoring.user_manag.dto.user.UserRequest;
 import com.realtime_monitoring.user_manag.dto.user.UserResponse;
+import com.realtime_monitoring.user_manag.dto.user.UserWithTenantResponse;
+import com.realtime_monitoring.user_manag.grpc.TenantGrpcClient;
 import com.realtime_monitoring.user_manag.mapper.UserMapper;
 import com.realtime_monitoring.user_manag.model.User;
 import com.realtime_monitoring.user_manag.model.UserStatus;
@@ -27,15 +31,18 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepository;
-    
+
     private final UserMapper userMapper;
 
+    private final TenantGrpcClient tenantClient;
+
+    // private final TenantGrpcClient tenantClient;
     @Override
     public UserResponse createUser(UserRequest request) {
         validateEmail(request.getEmail());
         validateUsername(request.getUsername());
         User user = userMapper.toEntity(request);
-       // user.setTenant(getTenant(request.getTenantId()).orElse(null));
+        // user.setTenant(getTenant(request.getTenantId()).orElse(null));
         user.setStatus(UserStatus.ACTIVE);
         return userMapper.toResponse(userRepository.save(user));
     }
@@ -69,7 +76,7 @@ public class UserServiceImpl implements UserService {
         userMapper.updateEntityFromRequest(request, user);
 
         // if (request.getTenantId() != null) {
-        //     user.setTenant(getTenant(request.getTenantId()).orElse(null));
+        // user.setTenant(getTenant(request.getTenantId()).orElse(null));
         // }
 
         return userMapper.toResponse(userRepository.save(user));
@@ -96,8 +103,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    
-
     private void validateEmail(String email) {
         if (userRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("email already exists");
@@ -118,6 +123,48 @@ public class UserServiceImpl implements UserService {
         }
         user.setStatus(enabled ? UserStatus.ACTIVE : UserStatus.INACTIVE);
         return userMapper.toResponse(userRepository.save(user));
+    }
+
+    @Override
+    public List<UserWithTenantResponse> findAllWithTenant() {
+
+        List<User> users = userRepository.findAll();
+
+        List<UUID> tenantIds =
+
+                users.stream()
+
+                        .map(User::getTenantId)
+
+                        .distinct()
+
+                        .toList();
+
+        Map<UUID, TenantDto> tenants =
+
+                tenantClient.getTenants(tenantIds);
+
+        return users.stream()
+
+                .map(user ->
+
+                new UserWithTenantResponse(
+
+                        user.getId(),
+
+                        user.getUsername(),
+
+                        user.getEmail(),
+
+                        tenants.get(
+                                user.getTenantId())
+
+                )
+
+                )
+
+                .toList();
+
     }
 
 }

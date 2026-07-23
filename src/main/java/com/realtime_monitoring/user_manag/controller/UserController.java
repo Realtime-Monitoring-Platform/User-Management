@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.realtime_monitoring.user_manag.dto.user.UpdateUserRequest;
 import com.realtime_monitoring.user_manag.dto.user.UserRequest;
 import com.realtime_monitoring.user_manag.dto.user.UserResponse;
+import com.realtime_monitoring.user_manag.dto.user.UserWithTenantResponse;
 import com.realtime_monitoring.user_manag.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
@@ -38,7 +38,7 @@ public class UserController {
         @GetMapping
         public ResponseEntity<Page<UserResponse>> getAllUsers(
 
-                @PageableDefault(page = 0, size = 10, sort = "createdAt") Pageable pageable) {
+                        @PageableDefault(page = 0, size = 10, sort = "createdAt") Pageable pageable) {
                 return ResponseEntity.ok(userService.getAllUsers(pageable));
         }
 
@@ -47,9 +47,16 @@ public class UserController {
                 return ResponseEntity.ok(userService.getUserById(id));
         }
 
+        @GetMapping("/with-tenant")
+        public List<UserWithTenantResponse> getUsers() {
+
+                return userService.findAllWithTenant();
+
+        }
+
         @PostMapping
         public ResponseEntity<UserResponse> createUser(
-                @RequestBody UserRequest request) {
+                        @RequestBody UserRequest request) {
                 UserResponse response = userService.createUser(request);
                 return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
@@ -66,7 +73,7 @@ public class UserController {
         }
 
         @PatchMapping("/{id}/status")
-        public ResponseEntity<UserResponse> updateUserStatus(@PathVariable UUID id,@RequestParam boolean enabled) {
+        public ResponseEntity<UserResponse> updateUserStatus(@PathVariable UUID id, @RequestParam boolean enabled) {
                 return ResponseEntity.ok(userService.updateStatus(id, enabled));
         }
 

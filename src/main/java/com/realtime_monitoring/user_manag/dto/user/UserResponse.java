@@ -3,6 +3,8 @@ package com.realtime_monitoring.user_manag.dto.user;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.realtime_monitoring.user_manag.dto.tenant.TenantDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +25,7 @@ public class UserResponse {
     private LocalDateTime lastLogin;
     
     private UUID tenantId;
-    
+    private TenantDto tenant;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     
