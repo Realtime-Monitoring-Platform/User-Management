@@ -47,13 +47,7 @@ public class UserController {
                 return ResponseEntity.ok(userService.getUserById(id));
         }
 
-        @GetMapping("/with-tenant")
-        public List<UserWithTenantResponse> getUsers() {
-
-                return userService.findAllWithTenant();
-
-        }
-
+        
         @PostMapping
         public ResponseEntity<UserResponse> createUser(
                         @RequestBody UserRequest request) {

@@ -15,7 +15,7 @@ import com.realtime_monitoring.user_manag.dto.user.UpdateUserRequest;
 import com.realtime_monitoring.user_manag.dto.user.UserRequest;
 import com.realtime_monitoring.user_manag.dto.user.UserResponse;
 import com.realtime_monitoring.user_manag.dto.user.UserWithTenantResponse;
-import com.realtime_monitoring.user_manag.grpc.TenantGrpcClient;
+
 import com.realtime_monitoring.user_manag.kafka.UserProducer;
 import com.realtime_monitoring.user_manag.mapper.UserMapper;
 import com.realtime_monitoring.user_manag.model.User;
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
 
-    private final TenantGrpcClient tenantClient;
+  
     private final UserProducer userProducer;
     // private final TenantGrpcClient tenantClient;
     
@@ -133,46 +133,5 @@ public class UserServiceImpl implements UserService {
         return userMapper.toResponse(userRepository.save(user));
     }
 
-    @Override
-    public List<UserWithTenantResponse> findAllWithTenant() {
-
-        List<User> users = userRepository.findAll();
-
-        List<UUID> tenantIds =
-
-                users.stream()
-
-                        .map(User::getTenantId)
-
-                        .distinct()
-
-                        .toList();
-
-        Map<UUID, TenantDto> tenants =
-
-                tenantClient.getTenants(tenantIds);
-
-        return users.stream()
-
-                .map(user ->
-
-                new UserWithTenantResponse(
-
-                        user.getId(),
-
-                        user.getUsername(),
-
-                        user.getEmail(),
-
-                        tenants.get(
-                                user.getTenantId())
-
-                )
-
-                )
-
-                .toList();
-
-    }
 
 }

@@ -20,5 +20,5 @@ public interface UserService {
     void delete(UUID id);
     List<UserResponse> findByTenant(UUID tenantId);
     UserResponse updateStatus(UUID id, boolean enabled);
-    List<UserWithTenantResponse> findAllWithTenant();
+    
 }
