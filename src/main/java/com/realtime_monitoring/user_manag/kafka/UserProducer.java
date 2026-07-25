@@ -4,6 +4,7 @@ import com.realtime_monitoring.user_manag.kafka.event.TeamCreatedEvent;
 import com.realtime_monitoring.user_manag.kafka.event.TeamUpdatedEvent;
 import com.realtime_monitoring.user_manag.kafka.event.DomainEvent;
 import com.realtime_monitoring.user_manag.kafka.event.UserCreatedEvent;
+import com.realtime_monitoring.user_manag.kafka.event.UserDeletedEvent;
 import com.realtime_monitoring.user_manag.kafka.event.UserUpdatedEvent;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -60,7 +61,6 @@ public class UserProducer {
                 "USER",
                 Instant.now());
 
-
         UserUpdatedEvent userEvent = new UserUpdatedEvent(
                 event,
                 user.getId(),
@@ -96,6 +96,27 @@ public class UserProducer {
         kafkaTemplate.send("team-events", team.getId().toString(), teamEvent);
     }
 
+    public void sendUserDeleted(UUID userId) {
+
+        DomainEvent event = new DomainEvent(
+                UUID.randomUUID(),
+                "USER_DELETED",
+                userId,
+                "USER",
+                Instant.now());
+
+        UserDeletedEvent userEvent = new UserDeletedEvent(
+                event,
+                userId);
+
+        log.info("Sending user deletion event: {}", userEvent);
+
+        kafkaTemplate.send(
+                "user-events-v5",
+                userId.toString(),
+                userEvent);
+    }
+
     public void sendTeamUpdate(Team team) {
         DomainEvent event = new DomainEvent(
                 UUID.randomUUID(),
@@ -111,5 +132,5 @@ public class UserProducer {
         log.info("sending team update event::::::::::::::: {}", teamEvent);
         kafkaTemplate.send("team-events", team.getId().toString(), teamEvent);
     }
-    
+
 }

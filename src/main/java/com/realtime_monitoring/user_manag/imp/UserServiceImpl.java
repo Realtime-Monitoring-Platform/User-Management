@@ -24,6 +24,7 @@ import com.realtime_monitoring.user_manag.repository.UserRepo;
 
 import com.realtime_monitoring.user_manag.service.UserService;
 
+import jakarta.ws.rs.NotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -70,30 +71,43 @@ public class UserServiceImpl implements UserService {
     public UserResponse update(
             UUID id,
             UpdateUserRequest request) {
-        User user = findById(id);
-        if (request.getEmail() != null && !request.getEmail().equals(user.getEmail())) {
-            validateEmail(request.getEmail());
-        }
-
-        if (request.getUsername() != null && !request.getUsername().equals(user.getUsername())) {
-            validateUsername(request.getUsername());
-        }
-
-        userMapper.updateEntityFromRequest(request, user);
-
-        // if (request.getTenantId() != null) {
-        // user.setTenant(getTenant(request.getTenantId()).orElse(null));
+        // User user = findById(id);
+        // if (request.getEmail() != null && !request.getEmail().equals(user.getEmail())) {
+        //     validateEmail(request.getEmail());
         // }
 
-        User updatedUser = userRepository.save(user);
-        userProducer.sendUserUpdate(updatedUser);
-        return userMapper.toResponse(updatedUser);
+        // if (request.getUsername() != null && !request.getUsername().equals(user.getUsername())) {
+        //     validateUsername(request.getUsername());
+        // }
+
+        // userMapper.updateEntityFromRequest(request, user);
+
+        // // if (request.getTenantId() != null) {
+        // // user.setTenant(getTenant(request.getTenantId()).orElse(null));
+        // // }
+
+        
+
+        // User updatedUser = userRepository.save(user);
+        // userProducer.sendUserUpdate(updatedUser);
+        // return userMapper.toResponse(updatedUser);
+
+        Optional<User> userOptional = this.userRepository.findById(id);
+        if (userOptional.isEmpty()) {
+            throw new NotFoundException("user not found with id: " + id);
+        }
+        User user = userOptional.get();
+        userMapper.updateEntityFromRequest(request, user);
+        User updatedTenant = userRepository.save(user);
+        userProducer.sendUserUpdate(updatedTenant);
+        return userMapper.toResponse(updatedTenant);
     }
 
     @Override
     public void delete(UUID id) {
         User user = findById(id);
         user.setStatus(UserStatus.INACTIVE);
+        userProducer.sendUserDeleted(user.getId());
         userRepository.save(user);
     }
 
