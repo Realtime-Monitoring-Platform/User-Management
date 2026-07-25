@@ -45,8 +45,8 @@ public class UserProducer {
             user.getTeams().stream().map(Team::getId).findFirst().orElse(null),
             user.getStatus() != null ? user.getStatus().name() : null
         );
-        log.info("sending user creation event: {}", userEvent);
-        kafkaTemplate.send("user.created", user.getId().toString(), userEvent);
+        log.info("sending user creation event::::::::::::::: {}", userEvent);
+        kafkaTemplate.send("user-events-v5", user.getId().toString(), userEvent);
     }
 
     public void sendUserUpdate(User user) {
@@ -70,8 +70,8 @@ public class UserProducer {
             user.getTeams().stream().map(Team::getId).findFirst().orElse(null),
             user.getStatus() != null ? user.getStatus().name() : null
         );
-        log.info("sending user update event: {}", userEvent);
-        kafkaTemplate.send("user.updated", user.getId().toString(), userEvent);
+        log.info("sending user update event::::::::::::::: {}", userEvent);
+        kafkaTemplate.send("user-events-v5", user.getId().toString(), userEvent);
     }
 
     public void sendTeamCreation(Team team) {
@@ -88,8 +88,8 @@ public class UserProducer {
             team.getDescription(),
             team.getTenantId()
         );
-        log.info("sending team creation event: {}", teamEvent);
-        kafkaTemplate.send("team.created", team.getId().toString(), teamEvent);
+        log.info("sending team creation event::::::::::::: {}", teamEvent);
+        kafkaTemplate.send("team-events", team.getId().toString(), teamEvent);
     }
 
     public void sendTeamUpdate(Team team) {
@@ -106,7 +106,7 @@ public class UserProducer {
             team.getDescription(),
             team.getTenantId()
         );
-        log.info("sending team update event: {}", teamEvent);
-        kafkaTemplate.send("team.updated", team.getId().toString(), teamEvent);
+        log.info("sending team update event::::::::::::::: {}", teamEvent);
+        kafkaTemplate.send("team-events", team.getId().toString(), teamEvent);
     }
 }

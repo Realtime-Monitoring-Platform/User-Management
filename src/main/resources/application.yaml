@@ -52,13 +52,21 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
     producer:
-      
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+         spring.json.add.type.info: false
+         spring.json.type.mapping: >
+            userCreated:com.realtime_monitoring.user_manag.kafka.event.UserCreatedEvent, 
+            userUpdated:com.realtime_monitoring.user_manag.kafka.event.UserUpdatedEvent,
+            userDeleted:com.realtime_monitoring.user_manag.kafka.event.UserDeletedEvent,
+            teamCreated:com.realtime_monitoring.user_manag.kafka.event.TeamCreatedEvent,
+            teamUpdated:com.realtime_monitoring.user_manag.kafka.event.TeamUpdatedEvent,
+            teamDeleted:com.realtime_monitoring.user_manag.kafka.event.TeamDeletedEvent
+  # kafka:
+  #   bootstrap-servers: localhost:9092
+  #   producer:
+      
+  #     key-serializer: org.apache.kafka.common.serialization.StringSerializer
+  #     value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
-
-grpc:
-  client:
-    tenant-service:
-      address: static://localhost:9095
-      negotiationType: plaintext
