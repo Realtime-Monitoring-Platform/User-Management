@@ -24,89 +24,92 @@ import lombok.extern.slf4j.Slf4j;
 public class UserProducer {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
-    public void sendUserCreation(User user ) {
+    public void sendUserCreation(User user) {
         DomainEvent event = new DomainEvent(
-            UUID.randomUUID(),
-            "USER_CREATED",
-            user.getId(),
-            "USER",
-            Instant.now()
-        );
+                UUID.randomUUID(),
+                "USER_CREATED",
+                user.getId(),
+                "USER",
+                Instant.now());
+
         UserCreatedEvent userEvent = new UserCreatedEvent(
-            event,
-            user.getUsername(),
-            user.getEmail(),
-            user.getFirstName(),
-            user.getLastName(),
-            user.getPhone(),
-            user.getAvatarUrl(),
-            user.getAddress(),
-            user.getTenantId(),
-            user.getTeams().stream().map(Team::getId).findFirst().orElse(null),
-            user.getStatus() != null ? user.getStatus().name() : null
-        );
+                event,
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPhone(),
+                user.getAvatarUrl(),
+                user.getPassword(),
+                user.getAddress(),
+                user.getStatus() != null ? user.getStatus().name() : null,
+                user.getTenantId(),
+                user.getRole() != null ? user.getRole().getId() : null,
+                user.getTeam() != null ? user.getTeam().getId() : null);
+
         log.info("sending user creation event::::::::::::::: {}", userEvent);
         kafkaTemplate.send("user-events-v5", user.getId().toString(), userEvent);
     }
 
     public void sendUserUpdate(User user) {
         DomainEvent event = new DomainEvent(
-            UUID.randomUUID(),
-            "USER_UPDATED",
-            user.getId(),
-            "USER",
-            Instant.now()
-        );
+                UUID.randomUUID(),
+                "USER_UPDATED",
+                user.getId(),
+                "USER",
+                Instant.now());
+
+
         UserUpdatedEvent userEvent = new UserUpdatedEvent(
-            event,
-            user.getUsername(),
-            user.getEmail(),
-            user.getFirstName(),
-            user.getLastName(),
-            user.getPhone(),
-            user.getAvatarUrl(),
-            user.getAddress(),
-            user.getTenantId(),
-            user.getTeams().stream().map(Team::getId).findFirst().orElse(null),
-            user.getStatus() != null ? user.getStatus().name() : null
-        );
+                event,
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPhone(),
+                user.getAvatarUrl(),
+                user.getPassword(),
+                user.getAddress(),
+                user.getStatus() != null ? user.getStatus().name() : null,
+                user.getTenantId(),
+                user.getRole() != null ? user.getRole().getId() : null,
+                user.getTeam() != null ? user.getTeam().getId() : null);
         log.info("sending user update event::::::::::::::: {}", userEvent);
         kafkaTemplate.send("user-events-v5", user.getId().toString(), userEvent);
     }
 
     public void sendTeamCreation(Team team) {
         DomainEvent event = new DomainEvent(
-            UUID.randomUUID(),
-            "TEAM_CREATED",
-            team.getId(),
-            "TEAM",
-            Instant.now()
-        );
+                UUID.randomUUID(),
+                "TEAM_CREATED",
+                team.getId(),
+                "TEAM",
+                Instant.now());
         TeamCreatedEvent teamEvent = new TeamCreatedEvent(
-            event,
-            team.getName(),
-            team.getDescription(),
-            team.getTenantId()
-        );
+                event,
+                team.getName(),
+                team.getDescription(),
+                team.getTenantId());
         log.info("sending team creation event::::::::::::: {}", teamEvent);
         kafkaTemplate.send("team-events", team.getId().toString(), teamEvent);
     }
 
     public void sendTeamUpdate(Team team) {
         DomainEvent event = new DomainEvent(
-            UUID.randomUUID(),
-            "TEAM_UPDATED",
-            team.getId(),
-            "TEAM",
-            Instant.now()
-        );
+                UUID.randomUUID(),
+                "TEAM_UPDATED",
+                team.getId(),
+                "TEAM",
+                Instant.now());
         TeamUpdatedEvent teamEvent = new TeamUpdatedEvent(
-            event,
-            team.getName(),
-            team.getDescription(),
-            team.getTenantId()
-        );
+                event,
+                team.getName(),
+                team.getDescription(),
+                team.getTenantId());
         log.info("sending team update event::::::::::::::: {}", teamEvent);
         kafkaTemplate.send("team-events", team.getId().toString(), teamEvent);
     }
+    
 }

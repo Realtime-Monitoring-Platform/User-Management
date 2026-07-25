@@ -2,16 +2,24 @@ package com.realtime_monitoring.user_manag.kafka.event;
 
 import java.util.UUID;
 
+import lombok.Getter;
+
+
+
 public record UserCreatedEvent(
     DomainEvent event,
-    String username,
-    String email,
-    String firstName,
-    String lastName,
-    String phone,
-    String avatarUrl,
-    String address,
-    UUID tenantId,
-    UUID teamId,
-    String status
+     UUID id,
+     String username,
+     String email,
+     String firstName,
+     String lastName,
+     String phone,
+     String avatarUrl,
+     String password,
+     String Address,
+     String status,
+     
+     UUID tenantId,
+     UUID roleId,
+     UUID teamId
 ) {}
