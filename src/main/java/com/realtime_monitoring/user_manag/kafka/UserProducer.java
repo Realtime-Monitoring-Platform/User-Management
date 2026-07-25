@@ -88,12 +88,13 @@ public class UserProducer {
                 "TEAM",
                 Instant.now());
         TeamCreatedEvent teamEvent = new TeamCreatedEvent(
+                team.getId(),
                 event,
                 team.getName(),
                 team.getDescription(),
                 team.getTenantId());
         log.info("sending team creation event::::::::::::: {}", teamEvent);
-        kafkaTemplate.send("team-events", team.getId().toString(), teamEvent);
+        kafkaTemplate.send("team-events-v2", team.getId().toString(), teamEvent);
     }
 
     public void sendUserDeleted(UUID userId) {
@@ -125,12 +126,13 @@ public class UserProducer {
                 "TEAM",
                 Instant.now());
         TeamUpdatedEvent teamEvent = new TeamUpdatedEvent(
+                team.getId(),
                 event,
                 team.getName(),
                 team.getDescription(),
                 team.getTenantId());
         log.info("sending team update event::::::::::::::: {}", teamEvent);
-        kafkaTemplate.send("team-events", team.getId().toString(), teamEvent);
+        kafkaTemplate.send("team-events-v2", team.getId().toString(), teamEvent);
     }
 
 }
