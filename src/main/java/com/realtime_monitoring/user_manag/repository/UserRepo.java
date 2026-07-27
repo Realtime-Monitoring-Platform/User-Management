@@ -21,7 +21,6 @@ public interface UserRepo extends JpaRepository<User, UUID> {
     List<User> findByTenantId(UUID tenantId);
     
     
-    
     boolean existsByUsername(String username);
     
 
