@@ -26,13 +26,19 @@ public class UserServiceGrpcImpl extends UserServiceGrpc.UserServiceImplBase {
                             .withDescription("User not found with ID: " + request.getId())
                             .asRuntimeException());
 
+            String roleName = "";
+            if (user.getRole() != null && user.getRole().getName() != null) {
+                roleName = user.getRole().getName();
+            }
             GetUserResponse response = GetUserResponse.newBuilder()
                     .setId(request.getId())
                     .setUsername(user.getUsername())
                     .setEmail(user.getEmail())
                     .setTenantId(user.getTenantId() != null ? user.getTenantId().toString() : "")
                     .setEnabled(user.getStatus() != null && user.getStatus().name().equals("ACTIVE"))
-                    .addAllRoles(user.getRole() != null ? java.util.List.of(user.getRole().getName()) : java.util.List.of())
+                    //.addAllRoles(user.getRole() != null ? java.util.List.of(user.getRole().getName()) : java.util.List.of())
+                    
+                    .setRole(roleName)
                     .addAllPermissions(java.util.List.of())
                     .build();
 
