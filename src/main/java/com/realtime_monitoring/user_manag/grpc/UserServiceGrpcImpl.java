@@ -27,7 +27,7 @@ public class UserServiceGrpcImpl extends UserServiceGrpc.UserServiceImplBase {
     @Transactional(readOnly = true)
     public void getUserById(GetUserRequest request, StreamObserver<GetUserResponse> responseObserver) {
         try {
-            // 1. Safe UUID Parsing
+
             if (request.getId() == null || request.getId().trim().isEmpty()) {
                 responseObserver.onError(Status.INVALID_ARGUMENT
                         .withDescription("User ID cannot be empty")
@@ -37,13 +37,11 @@ public class UserServiceGrpcImpl extends UserServiceGrpc.UserServiceImplBase {
 
             UUID userId = UUID.fromString(request.getId().trim());
 
-            // 2. Fetch User
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> Status.NOT_FOUND
                             .withDescription("User not found with ID: " + request.getId())
                             .asRuntimeException());
 
-            // 3. Null-Safe Field Extraction
             String roleName = "";
             List<String> permissions = List.of();
 
@@ -60,7 +58,6 @@ public class UserServiceGrpcImpl extends UserServiceGrpc.UserServiceImplBase {
                 }
             }
 
-            // 4. Build Response with Null Checks on Text Fields
             GetUserResponse response = GetUserResponse.newBuilder()
                     .setId(request.getId())
                     .setUsername(user.getUsername() != null ? user.getUsername() : "")
@@ -81,11 +78,11 @@ public class UserServiceGrpcImpl extends UserServiceGrpc.UserServiceImplBase {
                     .asRuntimeException());
 
         } catch (StatusRuntimeException e) {
-            // Re-throw gRPC-native exceptions like NOT_FOUND directly without turning into INTERNAL
+
             responseObserver.onError(e);
 
         } catch (Exception e) {
-            // Log full trace to server console so you can inspect future failures easily
+
             log.error("Unexpected error in getUserById for ID: {}", request.getId(), e);
             responseObserver.onError(Status.INTERNAL
                     .withDescription("Internal server error: " + e.getMessage())
