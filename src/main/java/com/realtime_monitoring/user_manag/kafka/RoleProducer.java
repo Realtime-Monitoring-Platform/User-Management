@@ -4,7 +4,7 @@ import com.realtime_monitoring.user_manag.kafka.event.TeamCreatedEvent;
 import com.realtime_monitoring.user_manag.kafka.event.TeamUpdatedEvent;
 import com.realtime_monitoring.user_manag.kafka.event.DomainEvent;
 import com.realtime_monitoring.user_manag.kafka.event.RoleCreatedEvent;
-import com.realtime_monitoring.user_manag.kafka.event.RoleUpdateEvent;
+import com.realtime_monitoring.user_manag.kafka.event.RoleUpdatedEvent;
 import com.realtime_monitoring.user_manag.kafka.event.UserCreatedEvent;
 import com.realtime_monitoring.user_manag.kafka.event.UserDeletedEvent;
 import com.realtime_monitoring.user_manag.kafka.event.UserUpdatedEvent;
@@ -55,7 +55,7 @@ public class RoleProducer {
                 "ROLE",
                 Instant.now());
 
-        RoleUpdateEvent roleEvent = new RoleUpdateEvent(
+        RoleUpdatedEvent roleEvent = new RoleUpdatedEvent(
                 event,
                 role.getId(),
                 role.getName(),
