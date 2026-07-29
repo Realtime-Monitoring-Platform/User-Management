@@ -18,7 +18,7 @@ import com.realtime_monitoring.user_manag.dto.role.RoleRequest;
 import com.realtime_monitoring.user_manag.dto.role.RoleResponse;
 import com.realtime_monitoring.user_manag.service.RoleService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -35,6 +35,7 @@ public class RoleController {
 
     @PostMapping
     public ResponseEntity<RoleResponse> createRole(@RequestBody RoleRequest request) {
+        System.out.println("Creating role controller:///////////////////////////// " + request);
         RoleResponse response = roleService.createRole(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

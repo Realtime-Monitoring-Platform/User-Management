@@ -35,18 +35,24 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleResponse createRole(RoleRequest roleRequest) {
-        Role role = this.roleRepository.save(roleMapper.toEntity(roleRequest));
+        System.out.println("Creating role:///////////////////////////// " + roleRequest);
+        Role newrole=roleMapper.toEntity(roleRequest);
+        System.out.println("New role before saving:///////////////////////////// " + newrole);
+        Role role = this.roleRepository.save(newrole);
         roleProducer.sendRoleCreation(role);
+        System.out.println("Role created:///////////////////////////// " + role);
         return roleMapper.toResponse(role);
     }
 
     @Override
     public RoleResponse updateRole(UUID roleId, RoleRequest roleRequest) {
+        System.out.println("Updating role:///////////////////////////// " + roleRequest.getName());
         Role role = this.roleRepository.findById(roleId).orElseThrow(() -> new RuntimeException("Role not found"));
         role.setName(roleRequest.getName());
         role.setDescription(roleRequest.getDescription());
         role = this.roleRepository.save(role);
         roleProducer.sendRoleUpdate(role);
+        System.out.println("Role updated:///////////////////////////// " + role.getName());
         return roleMapper.toResponse(role);
     }
 
