@@ -67,7 +67,7 @@ public class User extends BaseEntity {
     // private Set<Team> teams = new HashSet<>();
 
     @ManyToOne
-    @JoinColumn(name = "team_id")
+    @JoinColumn(name = "team_id")   
     private Team team;
 
 }
