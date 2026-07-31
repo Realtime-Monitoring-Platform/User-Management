@@ -1,6 +1,6 @@
 # spring:
 #   application:
-#     name: user_manag
+#     name: usermanag
 #   cloud:
 #     config:
 #       enabled: false
@@ -32,9 +32,16 @@ server:
   port: 9003
 
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
 spring:
   application:
-    name: user_manag
+    name: usermanag
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/postgres
@@ -56,16 +63,16 @@ spring:
       properties:
          spring.json.add.type.info: false
          spring.json.type.mapping: >
-            userCreated:com.realtime_monitoring.user_manag.kafka.event.UserCreatedEvent, 
-            userUpdated:com.realtime_monitoring.user_manag.kafka.event.UserUpdatedEvent,
-            userDeleted:com.realtime_monitoring.user_manag.kafka.event.UserDeletedEvent,
-            teamCreated:com.realtime_monitoring.user_manag.kafka.event.TeamCreatedEvent,
-            teamUpdated:com.realtime_monitoring.user_manag.kafka.event.TeamUpdatedEvent,
-            teamDeleted:com.realtime_monitoring.user_manag.kafka.event.TeamDeletedEvent,
-            teamDeleted:com.realtime_monitoring.user_manag.kafka.event.TeamDeletedEvent,
-            roleCreated:com.realtime_monitoring.user_manag.kafka.event.RoleCreatedEvent,
-            roleUpdated:com.realtime_monitoring.user_manag.kafka.event.RoleUpdatedEvent,
-            roleDeleted:com.realtime_monitoring.user_manag.kafka.event.RoleDeletedEvent
+            userCreated:com.realtime_monitoring.usermanag.kafka.event.UserCreatedEvent, 
+            userUpdated:com.realtime_monitoring.usermanag.kafka.event.UserUpdatedEvent,
+            userDeleted:com.realtime_monitoring.usermanag.kafka.event.UserDeletedEvent,
+            teamCreated:com.realtime_monitoring.usermanag.kafka.event.TeamCreatedEvent,
+            teamUpdated:com.realtime_monitoring.usermanag.kafka.event.TeamUpdatedEvent,
+            teamDeleted:com.realtime_monitoring.usermanag.kafka.event.TeamDeletedEvent,
+            teamDeleted:com.realtime_monitoring.usermanag.kafka.event.TeamDeletedEvent,
+            roleCreated:com.realtime_monitoring.usermanag.kafka.event.RoleCreatedEvent,
+            roleUpdated:com.realtime_monitoring.usermanag.kafka.event.RoleUpdatedEvent,
+            roleDeleted:com.realtime_monitoring.usermanag.kafka.event.RoleDeletedEvent
   # kafka:
   #   bootstrap-servers: localhost:9092
   #   producer:

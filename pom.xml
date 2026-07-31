@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.realtime_monitoring</groupId>
-	<artifactId>user_manag</artifactId>
+	<artifactId>usermanag</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>user_manag</name>
+	<name>usermanag</name>
 	<description />
 	<url />
 	<licenses>
@@ -38,7 +38,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webmvc</artifactId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
