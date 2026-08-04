@@ -17,4 +17,6 @@ public record UserUpdatedEvent(
      UUID tenantId,
      UUID roleId,
      UUID teamId
+     
+     
 ) {}

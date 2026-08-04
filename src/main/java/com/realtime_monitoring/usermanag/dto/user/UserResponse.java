@@ -28,5 +28,7 @@ public class UserResponse {
     private TenantDto tenant;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private UUID roleId;
+    private UUID teamId;
     
 }

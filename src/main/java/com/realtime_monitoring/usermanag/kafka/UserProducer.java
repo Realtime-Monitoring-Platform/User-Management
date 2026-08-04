@@ -1,8 +1,10 @@
 package com.realtime_monitoring.usermanag.kafka;
 
 import com.realtime_monitoring.usermanag.kafka.event.TeamCreatedEvent;
+import com.realtime_monitoring.usermanag.kafka.event.TeamDeletedEvent;
 import com.realtime_monitoring.usermanag.kafka.event.TeamUpdatedEvent;
 import com.realtime_monitoring.usermanag.kafka.event.DomainEvent;
+import com.realtime_monitoring.usermanag.kafka.event.RoleDeletedEvent;
 import com.realtime_monitoring.usermanag.kafka.event.UserCreatedEvent;
 import com.realtime_monitoring.usermanag.kafka.event.UserDeletedEvent;
 import com.realtime_monitoring.usermanag.kafka.event.UserUpdatedEvent;
@@ -50,9 +52,10 @@ public class UserProducer {
                 user.getTeam() != null ? user.getTeam().getId() : null);
 
         log.info("sending user creation event::::::::::::::: {}", userEvent);
-        kafkaTemplate.send("user-events-v5", user.getId().toString(), userEvent);
+        kafkaTemplate.send("user-events-v6", user.getId().toString(), userEvent);
     }
 
+   
     public void sendUserUpdate(User user) {
         DomainEvent event = new DomainEvent(
                 UUID.randomUUID(),
@@ -75,9 +78,11 @@ public class UserProducer {
                 user.getStatus() != null ? user.getStatus().name() : null,
                 user.getTenantId(),
                 user.getRole() != null ? user.getRole().getId() : null,
-                user.getTeam() != null ? user.getTeam().getId() : null);
+                user.getTeam() != null ? user.getTeam().getId() : null
+                
+        );
         log.info("sending user update event::::::::::::::: {}", userEvent);
-        kafkaTemplate.send("user-events-v5", user.getId().toString(), userEvent);
+        kafkaTemplate.send("user-events-v6", user.getId().toString(), userEvent);
     }
 
     public void sendTeamCreation(Team team) {
@@ -92,9 +97,13 @@ public class UserProducer {
                 event,
                 team.getName(),
                 team.getDescription(),
-                team.getTenantId());
+                team.getTenantId(),
+                team.getTeamLeaderId().getId()
+        
+        
+                );
         log.info("sending team creation event::::::::::::: {}", teamEvent);
-        kafkaTemplate.send("team-events-v2", team.getId().toString(), teamEvent);
+        kafkaTemplate.send("team-events-v3", team.getId().toString(), teamEvent);
     }
 
     public void sendUserDeleted(UUID userId) {
@@ -113,7 +122,7 @@ public class UserProducer {
         log.info("Sending user deletion event: {}", userEvent);
 
         kafkaTemplate.send(
-                "user-events-v5",
+                "user-events-v6",
                 userId.toString(),
                 userEvent);
     }
@@ -130,9 +139,32 @@ public class UserProducer {
                 event,
                 team.getName(),
                 team.getDescription(),
-                team.getTenantId());
+                team.getTenantId(),
+                team.getTeamLeaderId().getId()
+        
+        
+                );
         log.info("sending team update event::::::::::::::: {}", teamEvent);
-        kafkaTemplate.send("team-events-v2", team.getId().toString(), teamEvent);
+        kafkaTemplate.send("team-events-v3", team.getId().toString(), teamEvent);
     }
+
+   
+
+    public void sendTeamDeleted(UUID TeamId) {
+                DomainEvent event = new DomainEvent(
+                                UUID.randomUUID(),
+                                "Team_DELETED",
+                                TeamId,
+                                "Team",
+                                Instant.now());
+
+                TeamDeletedEvent TeamEvent = new TeamDeletedEvent(
+
+                                event,
+                                TeamId);
+
+                log.info("sending Team deletion event::::::::::::::: {}", TeamEvent);
+                kafkaTemplate.send("team-events-v3", TeamId.toString(), TeamEvent);
+        }
 
 }

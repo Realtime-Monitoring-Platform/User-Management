@@ -15,12 +15,15 @@ import com.realtime_monitoring.usermanag.model.Team;
     componentModel = MappingConstants.ComponentModel.SPRING,
     unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
-
 public interface TeamMapper {
-    
+
+    @Mapping(target = "teamLeaderId", ignore = true)
     Team toEntity(TeamRequest request);
-    
+
+    @Mapping(target = "teamLeaderId", source = "teamLeaderId.id")
     TeamResponse toResponse(Team team);
-        
-    void updateEntityFromRequest(UpdateTeamRequest request, @MappingTarget Team team);
+
+    @Mapping(target = "teamLeaderId", ignore = true)
+    void updateEntityFromRequest(UpdateTeamRequest request,
+                                 @MappingTarget Team team);
 }

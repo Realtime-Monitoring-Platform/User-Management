@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.rpc.context.AttributeContext.Request;
 import com.realtime_monitoring.usermanag.dto.tenant.TenantDto;
 import com.realtime_monitoring.usermanag.dto.user.UpdateUserRequest;
 import com.realtime_monitoring.usermanag.dto.user.UserRequest;
@@ -20,6 +21,8 @@ import com.realtime_monitoring.usermanag.kafka.UserProducer;
 import com.realtime_monitoring.usermanag.mapper.UserMapper;
 import com.realtime_monitoring.usermanag.model.User;
 import com.realtime_monitoring.usermanag.model.UserStatus;
+import com.realtime_monitoring.usermanag.repository.RoleRepository;
+import com.realtime_monitoring.usermanag.repository.TeamRepository;
 import com.realtime_monitoring.usermanag.repository.UserRepo;
 
 import com.realtime_monitoring.usermanag.service.UserService;
@@ -35,7 +38,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepo userRepository;
 
     private final UserMapper userMapper;
-
+    private final RoleRepository roleRepository;
+    private final TeamRepository teamRepository;
   
     private final UserProducer userProducer;
     // private final TenantGrpcClient tenantClient;
@@ -44,10 +48,14 @@ public class UserServiceImpl implements UserService {
     public UserResponse createUser(UserRequest request) {
         validateEmail(request.getEmail());
         validateUsername(request.getUsername());
+        System.out.println("Creating user with request/////////////////////: " + request);
         User user = userMapper.toEntity(request);
+        user.setRole(this.roleRepository.findById(request.getRoleId()).orElse(null));
+        user.setTeam(this.teamRepository.findById(request.getTeamId()).orElse(null));
         // user.setTenant(getTenant(request.getTenantId()).orElse(null));
         user.setStatus(UserStatus.ACTIVE);
-
+        
+        System.out.println("Creating user: " + user);
         
         User savedUser= userRepository.save(user);
         userProducer.sendUserCreation(savedUser);

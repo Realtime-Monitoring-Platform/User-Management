@@ -41,7 +41,9 @@ public class RoleProducer {
                                 event,
                                 role.getId(),
                                 role.getName(),
-                                role.getDescription());
+                                role.getDescription(),
+                                role.getPermissions().stream().map(p -> p.getId()).collect(java.util.stream.Collectors.toSet())
+                        );
 
                 log.info("sending role creation event::::::::::::::: {}", roleEvent);
                 kafkaTemplate.send("role-events-v1", role.getId().toString(), roleEvent);
@@ -59,7 +61,9 @@ public class RoleProducer {
                                 event,
                                 role.getId(),
                                 role.getName(),
-                                role.getDescription());
+                                role.getDescription(),
+                                role.getPermissions().stream().map(p -> p.getId()).collect(java.util.stream.Collectors.toSet())
+                        );
 
                 log.info("sending role update event::::::::::::::: {}", roleEvent);
                 kafkaTemplate.send("role-events-v1", role.getId().toString(), roleEvent);

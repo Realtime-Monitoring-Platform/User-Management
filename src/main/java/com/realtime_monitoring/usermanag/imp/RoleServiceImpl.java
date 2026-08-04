@@ -1,6 +1,8 @@
 package com.realtime_monitoring.usermanag.imp;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -12,6 +14,7 @@ import com.realtime_monitoring.usermanag.dto.role.RoleResponse;
 import com.realtime_monitoring.usermanag.kafka.RoleProducer;
 import com.realtime_monitoring.usermanag.mapper.RoleMapper;
 import com.realtime_monitoring.usermanag.mapper.UserMapper;
+import com.realtime_monitoring.usermanag.model.Permission;
 import com.realtime_monitoring.usermanag.model.Role;
 import com.realtime_monitoring.usermanag.repository.PermissionRepository;
 import com.realtime_monitoring.usermanag.repository.RoleRepository;
@@ -36,11 +39,18 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleResponse createRole(RoleRequest roleRequest) {
         System.out.println("Creating role:///////////////////////////// " + roleRequest);
-        Role newrole=roleMapper.toEntity(roleRequest);
+        Role newrole = roleMapper.toEntity(roleRequest);
+
+        Set<Permission> permissions = new HashSet<>(
+                permissionRepository.findAllById(
+                        roleRequest.getPermissionIds()));
+
+        newrole.setPermissions(permissions);
+
         System.out.println("New role before saving:///////////////////////////// " + newrole);
         Role role = this.roleRepository.save(newrole);
         roleProducer.sendRoleCreation(role);
-        System.out.println("Role created:///////////////////////////// " + role);
+        System.out.println("Role created:///////////////ro///////////// " + role);
         return roleMapper.toResponse(role);
     }
 
@@ -50,6 +60,14 @@ public class RoleServiceImpl implements RoleService {
         Role role = this.roleRepository.findById(roleId).orElseThrow(() -> new RuntimeException("Role not found"));
         role.setName(roleRequest.getName());
         role.setDescription(roleRequest.getDescription());
+
+        if (roleRequest.getPermissionIds() != null) {
+            Set<Permission> permissions = new HashSet<>(
+                    permissionRepository.findAllById(
+                            roleRequest.getPermissionIds()));
+            role.setPermissions(permissions);
+        }
+
         role = this.roleRepository.save(role);
         roleProducer.sendRoleUpdate(role);
         System.out.println("Role updated:///////////////////////////// " + role.getName());
@@ -61,6 +79,20 @@ public class RoleServiceImpl implements RoleService {
         Role role = this.roleRepository.findById(roleId).orElseThrow(() -> new RuntimeException("Role not found"));
         this.roleRepository.deleteById(roleId);
         roleProducer.sendRoleDeleted(roleId);
+    }
+
+    @Override
+    public RoleResponse assignPermissionsToRole(UUID roleId, Set<UUID> permissionIds) {
+        Role role = this.roleRepository.findById(roleId)
+                .orElseThrow(() -> new RuntimeException("Role not found"));
+
+        Set<Permission> permissions = new HashSet<>(
+                permissionRepository.findAllById(permissionIds));
+
+        role.setPermissions(permissions);
+        role = this.roleRepository.save(role);
+        roleProducer.sendRoleUpdate(role);
+        return roleMapper.toResponse(role);
     }
 
 }

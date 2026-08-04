@@ -13,5 +13,6 @@ public class TeamRequest {
     private String name;
     private String description;
     private UUID tenantId;
+    private UUID teamLeaderId;
 
 }

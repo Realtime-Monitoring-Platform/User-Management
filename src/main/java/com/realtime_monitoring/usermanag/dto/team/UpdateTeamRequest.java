@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class UpdateTeamRequest {
     private String name;
     private String description;
+    private UUID teamLeaderId;
     private UUID tenantId;
 }

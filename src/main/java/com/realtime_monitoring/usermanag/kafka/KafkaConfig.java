@@ -34,7 +34,10 @@ public class KafkaConfig {
                         "teamDeleted:com.realtime_monitoring.usermanag.kafka.event.TeamDeletedEvent," +
                         "roleCreated:com.realtime_monitoring.usermanag.kafka.event.RoleCreatedEvent," +
                         "roleUpdated:com.realtime_monitoring.usermanag.kafka.event.RoleUpdatedEvent," +
-                        "roleDeleted:com.realtime_monitoring.usermanag.kafka.event.RoleDeletedEvent"
+                        "roleDeleted:com.realtime_monitoring.usermanag.kafka.event.RoleDeletedEvent," +
+                        "permissionCreated:com.realtime_monitoring.usermanag.kafka.event.PermissionCreatedEvent," +
+                        "permissionUpdated:com.realtime_monitoring.usermanag.kafka.event.PermissionUpdatedEvent," +
+                        "permissionDeleted:com.realtime_monitoring.usermanag.kafka.event.PermissionDeletedEvent"
                     );
         return new DefaultKafkaProducerFactory<>(config);
     }

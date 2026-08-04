@@ -19,6 +19,8 @@ public class UserRequest {
     private String phone;
     private String avatarUrl;
     private UUID tenantId;
+    private UUID roleId;
+    private UUID teamId;
     
     
 }

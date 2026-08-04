@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.realtime_monitoring.usermanag.dto.role.AssignPermissionsRequest;
 import com.realtime_monitoring.usermanag.dto.role.RoleRequest;
 import com.realtime_monitoring.usermanag.dto.role.RoleResponse;
 import com.realtime_monitoring.usermanag.service.RoleService;
@@ -50,5 +51,13 @@ public class RoleController {
     public ResponseEntity<Void> deleteRole(@PathVariable UUID id) {
         roleService.deleteRole(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/permissions")
+    public ResponseEntity<RoleResponse> assignPermissionsToRole(
+            @PathVariable UUID id,
+            @RequestBody AssignPermissionsRequest request) {
+        RoleResponse response = roleService.assignPermissionsToRole(id, request.getPermissionIds());
+        return ResponseEntity.ok(response);
     }
 }

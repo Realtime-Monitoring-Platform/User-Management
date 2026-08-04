@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.realtime_monitoring.usermanag.dto.permissions.PermissionRequest;
 import com.realtime_monitoring.usermanag.dto.permissions.PermissionResponse;
+import com.realtime_monitoring.usermanag.kafka.PermissionProducer;
 import com.realtime_monitoring.usermanag.mapper.PermissionMapper;
 import com.realtime_monitoring.usermanag.model.Permission;
 import com.realtime_monitoring.usermanag.repository.PermissionRepository;
@@ -23,6 +24,7 @@ public class PermissionServiceImpl implements PermissionService {
 
     private final PermissionRepository permissionRepository;
     private final PermissionMapper permissionMapper;
+    private final PermissionProducer permissionProducer;
 
 
     @Override
@@ -40,6 +42,7 @@ public class PermissionServiceImpl implements PermissionService {
         Permission permission = permissionMapper.toEntity(request);
 
         Permission savedPermission = permissionRepository.save(permission);
+        permissionProducer.sendPermissionCreation(savedPermission);
 
         return permissionMapper.toResponse(savedPermission);
     }
@@ -59,6 +62,7 @@ public class PermissionServiceImpl implements PermissionService {
         permissionMapper.updateEntityFromRequest(request, permission);
 
         Permission updatedPermission = permissionRepository.save(permission);
+        permissionProducer.sendPermissionUpdate(updatedPermission);
 
         return permissionMapper.toResponse(updatedPermission);
     }
@@ -72,6 +76,7 @@ public class PermissionServiceImpl implements PermissionService {
         }
 
         permissionRepository.deleteById(permissionId);
+        permissionProducer.sendPermissionDeleted(permissionId);
     }
     
     
