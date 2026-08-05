@@ -37,8 +37,7 @@ public class KafkaConfig {
                         "roleDeleted:com.realtime_monitoring.usermanag.kafka.event.RoleDeletedEvent," +
                         "permissionCreated:com.realtime_monitoring.usermanag.kafka.event.PermissionCreatedEvent," +
                         "permissionUpdated:com.realtime_monitoring.usermanag.kafka.event.PermissionUpdatedEvent," +
-                        "permissionDeleted:com.realtime_monitoring.usermanag.kafka.event.PermissionDeletedEvent"
-                    );
+                        "permissionDeleted:com.realtime_monitoring.usermanag.kafka.event.PermissionDeletedEvent");
         return new DefaultKafkaProducerFactory<>(config);
     }
 

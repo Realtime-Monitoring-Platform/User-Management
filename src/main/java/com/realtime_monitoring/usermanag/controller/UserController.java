@@ -10,6 +10,7 @@ import com.realtime_monitoring.usermanag.dto.user.UserResponse;
 import com.realtime_monitoring.usermanag.dto.user.UserWithTenantResponse;
 import com.realtime_monitoring.usermanag.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -37,8 +38,13 @@ public class UserController {
 
         @GetMapping
         public ResponseEntity<Page<UserResponse>> getAllUsers(
-
-                        @PageableDefault(page = 0, size = 10, sort = "createdAt") Pageable pageable) {
+                        @PageableDefault(page = 0, size = 10, sort = "createdAt") Pageable pageable,
+                        HttpServletRequest request) {
+                System.out.println("X-User-Id: " + request.getHeader("X-User-Id"));
+                System.out.println("X-User-Email: " + request.getHeader("X-User-Email"));
+                System.out.println("X-User-Role: " + request.getHeader("X-User-Role"));
+                System.out.println("X-User-Tenant-Id: " + request.getHeader("X-User-Tenant-Id"));
+                System.out.println("X-User-Name: " + request.getHeader("X-User-Name"));
                 return ResponseEntity.ok(userService.getAllUsers(pageable));
         }
 
@@ -47,7 +53,6 @@ public class UserController {
                 return ResponseEntity.ok(userService.getUserById(id));
         }
 
-        
         @PostMapping
         public ResponseEntity<UserResponse> createUser(
                         @RequestBody UserRequest request) {

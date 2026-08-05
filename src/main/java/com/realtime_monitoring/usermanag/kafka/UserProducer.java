@@ -51,8 +51,8 @@ public class UserProducer {
                 user.getRole() != null ? user.getRole().getId() : null,
                 user.getTeam() != null ? user.getTeam().getId() : null);
 
-        log.info("sending user creation event::::::::::::::: {}", userEvent);
-        kafkaTemplate.send("user-events-v6", user.getId().toString(), userEvent);
+        log.info("create user :::::::::::::::::::::::::::::::: {}", userEvent);
+        kafkaTemplate.send("user-events-v7", user.getId().toString(), userEvent);
     }
 
    
@@ -82,7 +82,7 @@ public class UserProducer {
                 
         );
         log.info("sending user update event::::::::::::::: {}", userEvent);
-        kafkaTemplate.send("user-events-v6", user.getId().toString(), userEvent);
+        kafkaTemplate.send("user-events-v7", user.getId().toString(), userEvent);
     }
 
     public void sendTeamCreation(Team team) {
@@ -122,7 +122,7 @@ public class UserProducer {
         log.info("Sending user deletion event: {}", userEvent);
 
         kafkaTemplate.send(
-                "user-events-v6",
+                "user-events-v7",
                 userId.toString(),
                 userEvent);
     }
