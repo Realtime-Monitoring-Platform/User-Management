@@ -1,0 +1,57 @@
+package com.realtime_monitoring.usermanag.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.realtime_monitoring.usermanag.dto.team.TeamRequest;
+import com.realtime_monitoring.usermanag.dto.team.TeamResponse;
+import com.realtime_monitoring.usermanag.dto.team.UpdateTeamRequest;
+import com.realtime_monitoring.usermanag.service.TeamService;
+
+import lombok.RequiredArgsConstructor;
+import java.util.UUID;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+@RestController
+@RequestMapping("/api/v1/teams")
+@RequiredArgsConstructor
+public class TeamController {
+
+    private final TeamService teamService;
+
+    @GetMapping
+    public ResponseEntity<Page<TeamResponse>> getAllTeams(@PageableDefault(page = 0, size = 10, sort = "createdAt") Pageable pageable) {
+        return ResponseEntity.ok(teamService.getAllTeams(pageable));
+    }
+
+    @PostMapping
+    public ResponseEntity<TeamResponse> createTeam(@RequestBody TeamRequest request) {
+        TeamResponse response = teamService.createTeam(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TeamResponse> updateTeam(@PathVariable UUID id,@RequestBody UpdateTeamRequest request) {
+        TeamResponse response = teamService.updateTeam(id, request);
+        System.out.println("Updated team response::::::::::::::::::::::::::::::::::::::::" + response);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTeam(@PathVariable UUID id) {
+
+        teamService.deleteTeam(id);
+        return ResponseEntity.noContent().build();
+    }
+}
