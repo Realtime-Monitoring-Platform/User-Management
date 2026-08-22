@@ -11,7 +11,7 @@ RUN java -Djarmode=tools extract --layers --launcher application.jar
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /application
 
-*RUN addgroup -S spring && adduser -S spring -G spring
+RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
 
 COPY --from=builder /application/dependencies/ ./
