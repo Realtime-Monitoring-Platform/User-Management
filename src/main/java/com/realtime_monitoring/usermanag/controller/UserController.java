@@ -71,6 +71,13 @@ public class UserController {
                 return ResponseEntity.noContent().build();
         }
 
+        @PutMapping("/updateMyProfile")
+        public ResponseEntity<UserResponse> updateMyProfile(@RequestBody UpdateUserRequest request,
+                        HttpServletRequest httpRequest) {
+                System.out.println("X-User-Id: " + httpRequest.getHeader("X-User-Id"));
+                return ResponseEntity.ok(userService.updateMyProfile(request, httpRequest.getHeader("X-User-Id")));
+        }
+
         @PatchMapping("/{id}/status")
         public ResponseEntity<UserResponse> updateUserStatus(@PathVariable UUID id, @RequestParam boolean enabled) {
                 return ResponseEntity.ok(userService.updateStatus(id, enabled));

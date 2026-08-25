@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final RoleRepository roleRepository;
     private final TeamRepository teamRepository;
-  
+   // private final EmailService emailService;
     private final UserProducer userProducer;
     // private final TenantGrpcClient tenantClient;
     
@@ -48,8 +48,13 @@ public class UserServiceImpl implements UserService {
     public UserResponse createUser(UserRequest request) {
         validateEmail(request.getEmail());
         validateUsername(request.getUsername());
+        String generatedPassword = Integer.toHexString((int) (Math.random() * Integer.MAX_VALUE));
+        
+
+        
         System.out.println("Creating user with request/////////////////////: " + request);
         User user = userMapper.toEntity(request);
+        user.setPassword(generatedPassword);
         user.setRole(this.roleRepository.findById(request.getRoleId()).orElse(null));
         user.setTeam(this.teamRepository.findById(request.getTeamId()).orElse(null));
         // user.setTenant(getTenant(request.getTenantId()).orElse(null));
@@ -153,6 +158,19 @@ public class UserServiceImpl implements UserService {
         }
         user.setStatus(enabled ? UserStatus.ACTIVE : UserStatus.INACTIVE);
         return userMapper.toResponse(userRepository.save(user));
+    }
+
+    @Override
+    public UserResponse updateMyProfile(UpdateUserRequest request, String userId) {
+        Optional<User> userOptional = this.userRepository.findById(UUID.fromString(userId));
+        if (userOptional.isEmpty()) {
+            throw new NotFoundException("user not found with id: " + userId);
+        }
+        User user = userOptional.get();
+        userMapper.updateEntityFromRequest(request, user);
+        User updatedUser = userRepository.save(user);
+        userProducer.sendUserUpdate(updatedUser);
+        return userMapper.toResponse(updatedUser);    
     }
 
 
