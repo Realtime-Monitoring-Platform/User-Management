@@ -64,6 +64,13 @@ public class UserServiceGrpcImpl extends UserServiceGrpc.UserServiceImplBase {
                     .setEmail(user.getEmail() != null ? user.getEmail() : "")
                     .setTenantId(user.getTenantId() != null ? user.getTenantId().toString() : "")
                     .setEnabled(user.getStatus() != null && "ACTIVE".equalsIgnoreCase(user.getStatus().name()))
+                    .setAddress(user.getAddress() != null ? user.getAddress() : "")
+                    .setPhone(user.getPhone() != null ? user.getPhone() : "")
+                    //.setFirstLogin(user.isFirstLogin())
+                    .setLastName(user.getLastName() != null ? user.getLastName() : "")
+                    .setFirstName(user.getFirstName() != null ? user.getFirstName() : "")
+                    .setTeamName(user.getTeam() != null ? user.getTeam().getName() : ""   )
+                    
                     .setRole(roleName)
                     .addAllPermissions(permissions)
                     .build();

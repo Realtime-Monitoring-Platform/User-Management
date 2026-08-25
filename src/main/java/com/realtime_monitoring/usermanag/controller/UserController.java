@@ -53,6 +53,12 @@ public class UserController {
                 return ResponseEntity.ok(userService.getUserById(id));
         }
 
+        @GetMapping("/me")
+        public ResponseEntity<UserResponse> getMyProfile(HttpServletRequest request) {
+                String userId = request.getHeader("X-User-Id");
+                return ResponseEntity.ok(userService.getUserById(UUID.fromString(userId)));
+        }
+
         @PostMapping
         public ResponseEntity<UserResponse> createUser(
                         @RequestBody UserRequest request) {

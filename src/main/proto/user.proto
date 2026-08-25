@@ -22,5 +22,10 @@ message GetUserResponse {
     bool enabled = 5;
     string role = 6;
     repeated string permissions = 7;
+    string phone = 8;
+    string teamName = 9;
+    string address = 10;
+    string firstName = 11;
+    string lastName = 12;
 
 }
