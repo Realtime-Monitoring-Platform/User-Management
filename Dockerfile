@@ -20,6 +20,6 @@ COPY --from=builder /app/target/*.jar /app/app.jar
 
 USER 1001
 
-EXPOSE 9005
+EXPOSE 9003
 
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
