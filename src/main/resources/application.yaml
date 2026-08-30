@@ -6,6 +6,13 @@
 #       enabled: false
   # config:
   #   import: optional:configserver:http://localhost:9000
+spring:
+  application:
+    name: usermanag
+  config:
+    import:  ${SPRING_CONFIG_IMPORT:optional:configserver:http://config-server:9000}
+# server:
+#   port: 8222
 
 # grpc:
 #  client:
@@ -28,62 +35,62 @@
   #   database: postgresql
   #   database-platform: org.hibernate.dialect.PostgreSQLDialect
 
-server:
-  port: 9003
+# server:
+#   port: 9003
 
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-    register-with-eureka: true
-    fetch-registry: true
+# eureka:
+#   client:
+#     service-url:
+#       defaultZone: http://localhost:8761/eureka/
+#     register-with-eureka: true
+#     fetch-registry: true
 
-spring:
-  application:
-    name: usermanag
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: chedly
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-  cloud:
-    config:
-      enabled: false
-  kafka:
-    bootstrap-servers: localhost:9092
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-      properties:
-         spring.json.add.type.info: false
-         spring.json.type.mapping: >
-            userCreated:com.realtime_monitoring.usermanag.kafka.event.UserCreatedEvent, 
-            userUpdated:com.realtime_monitoring.usermanag.kafka.event.UserUpdatedEvent,
-            userDeleted:com.realtime_monitoring.usermanag.kafka.event.UserDeletedEvent,
-            teamCreated:com.realtime_monitoring.usermanag.kafka.event.TeamCreatedEvent,
-            teamUpdated:com.realtime_monitoring.usermanag.kafka.event.TeamUpdatedEvent,
+# spring:
+#   application:
+#     name: usermanag
+#   datasource:
+#     driver-class-name: org.postgresql.Driver
+#     url: jdbc:postgresql://localhost:5432/postgres
+#     username: postgres
+#     password: chedly
+#   jpa:
+#     hibernate:
+#       ddl-auto: update
+#     database: postgresql
+#     database-platform: org.hibernate.dialect.PostgreSQLDialect
+#   cloud:
+#     config:
+#       enabled: false
+#   kafka:
+#     bootstrap-servers: localhost:9092
+#     producer:
+#       key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+#       properties:
+#          spring.json.add.type.info: false
+#          spring.json.type.mapping: >
+#             userCreated:com.realtime_monitoring.usermanag.kafka.event.UserCreatedEvent, 
+#             userUpdated:com.realtime_monitoring.usermanag.kafka.event.UserUpdatedEvent,
+#             userDeleted:com.realtime_monitoring.usermanag.kafka.event.UserDeletedEvent,
+#             teamCreated:com.realtime_monitoring.usermanag.kafka.event.TeamCreatedEvent,
+#             teamUpdated:com.realtime_monitoring.usermanag.kafka.event.TeamUpdatedEvent,
             
-            teamDeleted:com.realtime_monitoring.usermanag.kafka.event.TeamDeletedEvent,
-            roleCreated:com.realtime_monitoring.usermanag.kafka.event.RoleCreatedEvent,
-            roleUpdated:com.realtime_monitoring.usermanag.kafka.event.RoleUpdatedEvent,
-            roleDeleted:com.realtime_monitoring.usermanag.kafka.event.RoleDeletedEvent,
-            permissionCreated:com.realtime_monitoring.usermanag.kafka.event.PermissionCreatedEvent,
-            permissionUpdated:com.realtime_monitoring.usermanag.kafka.event.PermissionUpdatedEvent,
-            permissionDeleted:com.realtime_monitoring.usermanag.kafka.event.PermissionDeletedEvent
-  # kafka:
-  #   bootstrap-servers: localhost:9092
-  #   producer:
+#             teamDeleted:com.realtime_monitoring.usermanag.kafka.event.TeamDeletedEvent,
+#             roleCreated:com.realtime_monitoring.usermanag.kafka.event.RoleCreatedEvent,
+#             roleUpdated:com.realtime_monitoring.usermanag.kafka.event.RoleUpdatedEvent,
+#             roleDeleted:com.realtime_monitoring.usermanag.kafka.event.RoleDeletedEvent,
+#             permissionCreated:com.realtime_monitoring.usermanag.kafka.event.PermissionCreatedEvent,
+#             permissionUpdated:com.realtime_monitoring.usermanag.kafka.event.PermissionUpdatedEvent,
+#             permissionDeleted:com.realtime_monitoring.usermanag.kafka.event.PermissionDeletedEvent
+#   # kafka:
+#   #   bootstrap-servers: localhost:9092
+#   #   producer:
       
-  #     key-serializer: org.apache.kafka.common.serialization.StringSerializer
-  #     value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+#   #     key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#   #     value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 
-grpc:
-  server:
-    port: 9095
+# grpc:
+#   server:
+#     port: 9095
