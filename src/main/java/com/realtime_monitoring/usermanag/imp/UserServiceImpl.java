@@ -55,8 +55,12 @@ public class UserServiceImpl implements UserService {
         System.out.println("Creating user with request/////////////////////: " + request);
         User user = userMapper.toEntity(request);
         user.setPassword(generatedPassword);
-        user.setRole(this.roleRepository.findById(request.getRoleId()).orElse(null));
-        user.setTeam(this.teamRepository.findById(request.getTeamId()).orElse(null));
+        user.setRole(request.getRoleId() != null
+                ? this.roleRepository.findById(request.getRoleId()).orElse(null)
+                : null);
+        user.setTeam(request.getTeamId() != null
+                ? this.teamRepository.findById(request.getTeamId()).orElse(null)
+                : null);
         // user.setTenant(getTenant(request.getTenantId()).orElse(null));
         user.setStatus(UserStatus.ACTIVE);
         

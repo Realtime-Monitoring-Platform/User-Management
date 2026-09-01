@@ -38,6 +38,8 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public TeamResponse createTeam(TeamRequest request) {
+
+        
         request.setTeamLeaderId(this.userRepository.findById(request.getTeamLeaderId())
                 .orElseThrow(() -> new ResourceNotFoundException("User not found")).getId());
         System.out.println("Creating team:///////////////////////////// " + request.getTeamLeaderId());
@@ -46,7 +48,7 @@ public class TeamServiceImpl implements TeamService {
         // .orElseThrow(() -> new ResourceNotFoundException("Tenant not found"));
         // team.setTenant(tenant);
         User leader = userRepository.findById(request.getTeamLeaderId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         Team team = teamMapper.toEntity(request);
 
