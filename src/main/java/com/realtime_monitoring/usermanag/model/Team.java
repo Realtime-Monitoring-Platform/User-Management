@@ -27,7 +27,7 @@ public class Team extends BaseEntity {
     
     private UUID tenantId;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "team_leader_id",nullable = t)
+    @JoinColumn(name = "team_leader_id")
     private User teamLeaderId;
 
 }
