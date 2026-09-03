@@ -113,6 +113,8 @@ public class UserServiceImpl implements UserService {
         if (userOptional.isEmpty()) {
             throw new NotFoundException("user not found with id: " + id);
         }
+
+        
         User user = userOptional.get();
         userMapper.updateEntityFromRequest(request, user);
         User updatedTenant = userRepository.save(user);

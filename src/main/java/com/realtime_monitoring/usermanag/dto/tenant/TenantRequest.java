@@ -1,7 +1,5 @@
 package com.realtime_monitoring.usermanag.dto.tenant;
 
-import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

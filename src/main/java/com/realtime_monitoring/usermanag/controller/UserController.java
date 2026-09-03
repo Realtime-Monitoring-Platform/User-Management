@@ -65,6 +65,7 @@ public class UserController {
                 UserResponse response = userService.createUser(request);
                 return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
+        
 
         @PutMapping("/{id}")
         public ResponseEntity<UserResponse> updateUser(@PathVariable UUID id, @RequestBody UpdateUserRequest request) {

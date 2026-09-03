@@ -36,6 +36,8 @@ public class TeamServiceImpl implements TeamService {
         return this.teamRepository.findAll(pageable).map(teamMapper::toResponse);
     }
 
+    
+
     @Override
     public TeamResponse createTeam(TeamRequest request) {
 
